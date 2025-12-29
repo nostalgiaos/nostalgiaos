@@ -629,6 +629,19 @@ function showMainContent() {
     })
   })
   
+  // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
+  if (window.innerWidth <= 768) {
+    // Try multiple times to ensure conversion happens
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 50)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 200)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 500)
+  }
 }
 
 function showSoftwearPage() {

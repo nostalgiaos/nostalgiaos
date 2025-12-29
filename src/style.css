@@ -3609,6 +3609,25 @@ a {
     height: 280px;
   }
   
+  /* Override desktop percentage-based sizing that causes rasterization */
+  .product-showcase-image img {
+    max-width: none !important;
+    max-height: none !important;
+    width: 250px !important;
+    height: 250px !important;
+    object-fit: contain !important;
+    filter: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+  
+  .marlboros-item .product-showcase-image img {
+    width: 180px !important;
+    height: 180px !important;
+    max-width: 180px !important;
+    max-height: 180px !important;
+  }
+  
   /* Inline SVGs will replace img tags on mobile via JavaScript */
   /* Ensure inline SVGs render properly - exact pixel dimensions to prevent scaling */
   .product-showcase-image svg,
@@ -3668,6 +3687,15 @@ a {
     height: 280px !important;
     max-width: 280px !important;
     max-height: 280px !important;
+  }
+  
+  .product-detail-image img {
+    max-width: none !important;
+    max-height: none !important;
+    width: 280px !important;
+    height: 280px !important;
+    filter: none !important;
+    transform: none !important;
   }
   
   /* Disable hover scale on mobile */
