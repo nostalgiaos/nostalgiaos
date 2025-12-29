@@ -3511,7 +3511,7 @@ a {
     font-size: 12px;
     font-family: "Times New Roman", "Times", serif !important;
     font-weight: 300;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.1em;
   }
   
   .product-price {
@@ -3628,7 +3628,7 @@ a {
     font-size: 18px;
     font-family: "Times New Roman", "Times", serif !important;
     font-weight: 300;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.1em;
   }
   
   .product-showcase-price {
@@ -3759,7 +3759,7 @@ a {
     font-size: 16px;
     font-family: "Times New Roman", "Times", serif !important;
     font-weight: 300;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.1em;
   }
   
   .product-showcase-price {
