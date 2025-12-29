@@ -91,9 +91,30 @@ async function convertImgToInlineSVG(imgElement) {
 async function convertAllSVGImagesToInline() {
   if (window.innerWidth > 768) return // Only on mobile
   
+  // Wait a bit for DOM to be ready
+  await new Promise(resolve => setTimeout(resolve, 50))
+  
   const svgImages = document.querySelectorAll('img[src$=".svg"]')
-  const promises = Array.from(svgImages).map(img => convertImgToInlineSVG(img))
+  if (svgImages.length === 0) return
+  
+  // Convert each image
+  const promises = Array.from(svgImages).map(async (img) => {
+    // Double-check it's still an img tag (not already converted)
+    if (img.tagName === 'IMG' && img.src && img.src.endsWith('.svg')) {
+      await convertImgToInlineSVG(img)
+    }
+  })
+  
   await Promise.all(promises)
+  
+  // Verify conversion worked - if any img tags remain, try again
+  const remainingImages = document.querySelectorAll('img[src$=".svg"]')
+  if (remainingImages.length > 0) {
+    console.log(`Still have ${remainingImages.length} SVG images to convert, retrying...`)
+    setTimeout(() => {
+      Array.from(remainingImages).forEach(img => convertImgToInlineSVG(img))
+    }, 100)
+  }
 }
 
 // Date and time display functions
@@ -872,9 +893,16 @@ function showSoftwearPage() {
   
   // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
   if (window.innerWidth <= 768) {
+    // Try multiple times to ensure conversion happens
     setTimeout(() => {
       convertAllSVGImagesToInline()
-    }, 100)
+    }, 50)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 200)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 500)
   }
 }
 
@@ -1131,9 +1159,16 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   
   // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
   if (window.innerWidth <= 768) {
+    // Try multiple times to ensure conversion happens
     setTimeout(() => {
       convertAllSVGImagesToInline()
-    }, 100)
+    }, 50)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 200)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 500)
   }
   
   // Notify Me button handler
@@ -1482,9 +1517,16 @@ function showHardwearPage() {
   
   // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
   if (window.innerWidth <= 768) {
+    // Try multiple times to ensure conversion happens
     setTimeout(() => {
       convertAllSVGImagesToInline()
-    }, 100)
+    }, 50)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 200)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 500)
   }
 }
 
@@ -1871,9 +1913,16 @@ function showBasketPage() {
   
   // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
   if (window.innerWidth <= 768) {
+    // Try multiple times to ensure conversion happens
     setTimeout(() => {
       convertAllSVGImagesToInline()
-    }, 100)
+    }, 50)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 200)
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 500)
   }
   
   // Checkout button
