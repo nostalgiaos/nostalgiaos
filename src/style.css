@@ -3609,75 +3609,74 @@ a {
     height: 280px;
   }
   
-  /* Fix SVG blurriness on iOS Safari - prevent rasterization */
+  /* Fix SVG blurriness on iOS Safari - use background-image instead of img tag */
+  .product-showcase-image {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+  
+  /* Hide img tag on mobile and use background-image instead */
   .product-showcase-image img {
-    /* Set exact pixel dimensions - NO SCALING to prevent rasterization */
-    /* Width/height attributes in HTML should match these values */
+    display: none !important;
+  }
+  
+  /* Set background-image based on data attribute or use CSS to target specific products */
+  .product-showcase-item[data-product="essentials-01"] .product-showcase-image {
+    background-image: url('/cigtshirt.svg') !important;
     width: 250px !important;
     height: 250px !important;
-    /* Use contain to maintain aspect ratio without scaling */
-    object-fit: contain !important;
-    /* Remove all transforms that cause rasterization */
-    transform: none !important;
-    -webkit-transform: none !important;
-    /* Remove filter - causes rasterization on iOS */
-    filter: none !important;
-    /* Force vector rendering - iOS specific */
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-    shape-rendering: geometricPrecision;
-    text-rendering: geometricPrecision;
-    /* Remove hardware acceleration hints that can cause issues */
-    backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    will-change: auto;
-    /* Prevent any scaling */
-    min-width: 250px !important;
-    min-height: 250px !important;
-    max-width: 250px !important;
-    max-height: 250px !important;
+    margin: 0 auto !important;
+  }
+  
+  .product-showcase-item[data-product="essentials-02"] .product-showcase-image {
+    background-image: url('/jeans1.svg') !important;
+    width: 250px !important;
+    height: 250px !important;
+    margin: 0 auto !important;
+  }
+  
+  .product-showcase-item[data-product="essentials-03"] .product-showcase-image {
+    background-image: url('/finderhoodie.svg') !important;
+    width: 250px !important;
+    height: 250px !important;
+    margin: 0 auto !important;
+  }
+  
+  .product-showcase-item[data-product="marlboros-01"] .product-showcase-image {
+    background-image: url('/MarlborOS.svg') !important;
+    width: 180px !important;
+    height: 180px !important;
+    margin: 0 auto !important;
+  }
+  
+  .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-image {
+    background-image: url('/FinderUSAflag.svg') !important;
+    width: 250px !important;
+    height: 250px !important;
+    margin: 0 auto !important;
   }
   
   /* Disable hover scale on mobile */
-  .product-showcase-item:hover .product-showcase-image img {
+  .product-showcase-item:hover .product-showcase-image {
     transform: none !important;
-    filter: none !important;
   }
   
-  /* MarlborOS specific size on mobile - exact dimensions */
-  .marlboros-item .product-showcase-image img {
-    width: 180px !important;
-    height: 180px !important;
-    min-width: 180px !important;
-    min-height: 180px !important;
-    max-width: 180px !important;
-    max-height: 180px !important;
-    object-fit: contain !important;
-  }
-  
-  /* Fix product detail page SVG images on mobile */
-  .product-detail-image img {
-    /* Set exact pixel dimensions - NO SCALING */
-    /* Width/height attributes in HTML should match these values */
+  /* Fix product detail page SVG images on mobile - use background-image */
+  .product-detail-image {
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
     width: 280px !important;
     height: 280px !important;
-    min-width: 280px !important;
-    min-height: 280px !important;
-    max-width: 280px !important;
-    max-height: 280px !important;
-    /* Use contain to maintain aspect ratio without scaling */
-    object-fit: contain !important;
-    /* Remove filter - causes rasterization on iOS */
-    filter: none !important;
-    /* Remove transforms */
-    transform: none !important;
-    -webkit-transform: none !important;
-    /* Force vector rendering - iOS specific */
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-    shape-rendering: geometricPrecision;
-    text-rendering: geometricPrecision;
+    margin: 0 auto !important;
   }
+  
+  .product-detail-image img {
+    display: none !important;
+  }
+  
+  /* Background-image will be set via JavaScript inline style */
   
   /* Product showcase name and price - adjust sizes and font */
   .product-showcase-name {

@@ -818,7 +818,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
             <div class="shop-content">
               <div class="product-detail-content">
                 <!-- Left: Product Image -->
-                <div class="product-detail-image">
+                <div class="product-detail-image" data-product-image="${productImage}">
                   <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" />
                 </div>
                 
@@ -1015,6 +1015,16 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     const isMobileView = window.innerWidth <= 768
     if (!isMobileView) {
       specsContent.style.display = 'block'
+    }
+  }
+  
+  // Set background-image for product detail image on mobile (to prevent SVG rasterization)
+  const productDetailImage = document.querySelector('.product-detail-image[data-product-image]')
+  if (productDetailImage && window.innerWidth <= 768) {
+    const imageUrl = productDetailImage.getAttribute('data-product-image')
+    if (imageUrl) {
+      productDetailImage.style.setProperty('--product-bg-image', `url(${imageUrl})`)
+      productDetailImage.style.backgroundImage = `url(${imageUrl})`
     }
   }
   
