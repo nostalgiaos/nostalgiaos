@@ -795,10 +795,9 @@ body.mobile-view .shop-container.home-page-container > .top-nav-bar {
   /* Corner radius: 8 for mobile */
   border-radius: 8px !important;
   /* Inside stroke: #000000 at 30% opacity, weight 1 */
-  /* Drop shadow: X: 0, Y: 4, Blur: 4, Spread: 0, Color: #000000 at 25% opacity */
+  /* Only inset border, no drop shadow on mobile for clean look */
   box-shadow: 
-    inset 0 0 0 1px rgba(0, 0, 0, 0.3),
-    0 4px 4px 0 rgba(0, 0, 0, 0.25) !important;
+    inset 0 0 0 1px rgba(0, 0, 0, 0.3) !important;
   overflow: visible !important;
   display: flex !important;
   align-items: center !important;
