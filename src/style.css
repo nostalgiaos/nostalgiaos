@@ -3609,17 +3609,19 @@ a {
     height: 280px;
   }
   
-  /* Improve SVG rendering quality on mobile/iOS */
+  /* Improve SVG rendering quality on mobile/iOS - remove filter to prevent rasterization */
   .product-showcase-image img {
     image-rendering: -webkit-optimize-contrast;
     image-rendering: crisp-edges;
-    image-rendering: auto;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    /* Reduce filter intensity on mobile for better performance */
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+    /* Remove filter on mobile - iOS Safari rasterizes SVGs with filters, causing blurriness */
+    filter: none !important;
+    /* Ensure proper scaling */
+    image-rendering: auto;
+    -webkit-font-smoothing: antialiased;
   }
   
   /* Product showcase name and price - adjust sizes and font */
