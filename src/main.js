@@ -278,7 +278,7 @@ function showMainContent() {
         <!-- Softwear Products -->
         <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/cigtshirt.svg" alt="The Essentials" width="797" height="797" />
+            <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">the essentials</h3>
@@ -288,7 +288,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/jeans1.svg" alt="Jeans" width="1080" height="1080" />
+            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">jeans</h3>
@@ -298,7 +298,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/finderhoodie.svg" alt="Hoodie" width="1080" height="1080" />
+            <img src="/finderhoodie.svg" alt="Hoodie" width="250" height="250" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -309,7 +309,7 @@ function showMainContent() {
         <!-- Hardwear Products -->
         <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/MarlborOS.svg" alt="MarlborOS" width="222" height="355" />
+            <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">marlboros</h3>
@@ -319,7 +319,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="645" height="352" />
+            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">nostalgia flag</h3>
@@ -557,7 +557,7 @@ function showSoftwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/cigtshirt.svg" alt="The Essentials" width="797" height="797" />
+                      <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">the essentials</h3>
@@ -566,7 +566,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/jeans1.svg" alt="Jeans" width="1080" height="1080" />
+                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">jeans</h3>
@@ -575,7 +575,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/finderhoodie.svg" alt="Hoodie" width="1080" height="1080" />
+                      <img src="/finderhoodie.svg" alt="Hoodie" width="250" height="250" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -793,21 +793,14 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   const softwearActive = activeSection === 'softwear' ? 'active' : ''
   const hardwearActive = activeSection === 'hardwear' ? 'active' : ''
   
-  // Determine width/height based on product image
-  let imgWidth = '797'
-  let imgHeight = '797'
-  if (productImage.includes('jeans1.svg')) {
-    imgWidth = '1080'
-    imgHeight = '1080'
-  } else if (productImage.includes('finderhoodie.svg')) {
-    imgWidth = '1080'
-    imgHeight = '1080'
-  } else if (productImage.includes('MarlborOS.svg')) {
-    imgWidth = '222'
-    imgHeight = '355'
-  } else if (productImage.includes('FinderUSAflag.svg')) {
-    imgWidth = '645'
-    imgHeight = '352'
+  // Determine width/height based on product image - use display size for mobile to prevent rasterization
+  // On mobile, we use 280px to match CSS. Desktop will scale appropriately.
+  let imgWidth = '280'
+  let imgHeight = '280'
+  if (productImage.includes('MarlborOS.svg')) {
+    // MarlborOS is smaller, use proportional size
+    imgWidth = '200'
+    imgHeight = '200'
   }
   
   document.querySelector('#app').innerHTML = `
@@ -1278,7 +1271,7 @@ function showHardwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/MarlborOS.svg" alt="MarlborOS" width="222" height="355" />
+                      <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">marlboros</h3>
@@ -1287,7 +1280,7 @@ function showHardwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="645" height="352" />
+                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">nostalgia flag</h3>
@@ -1659,7 +1652,7 @@ function showBasketPage() {
                     ? basket.map(item => `
                         <div class="basket-item">
                           <div class="basket-item-image">
-                            <img src="/cigtshirt.svg" alt="${item.name}" width="797" height="797" />
+                            <img src="/cigtshirt.svg" alt="${item.name}" width="250" height="250" />
                           </div>
                           <div class="basket-item-details">
                             <div class="basket-item-name">${item.name}</div>

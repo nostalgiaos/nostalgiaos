@@ -3612,10 +3612,11 @@ a {
   /* Fix SVG blurriness on iOS Safari - prevent rasterization */
   .product-showcase-image img {
     /* Set exact pixel dimensions - NO SCALING to prevent rasterization */
+    /* Width/height attributes in HTML should match these values */
     width: 250px !important;
     height: 250px !important;
-    /* Remove object-fit which can cause scaling */
-    object-fit: none !important;
+    /* Use contain to maintain aspect ratio without scaling */
+    object-fit: contain !important;
     /* Remove all transforms that cause rasterization */
     transform: none !important;
     -webkit-transform: none !important;
@@ -3651,20 +3652,21 @@ a {
     min-height: 180px !important;
     max-width: 180px !important;
     max-height: 180px !important;
-    object-fit: none !important;
+    object-fit: contain !important;
   }
   
   /* Fix product detail page SVG images on mobile */
   .product-detail-image img {
     /* Set exact pixel dimensions - NO SCALING */
+    /* Width/height attributes in HTML should match these values */
     width: 280px !important;
     height: 280px !important;
     min-width: 280px !important;
     min-height: 280px !important;
     max-width: 280px !important;
     max-height: 280px !important;
-    /* Remove object-fit which can cause scaling */
-    object-fit: none !important;
+    /* Use contain to maintain aspect ratio without scaling */
+    object-fit: contain !important;
     /* Remove filter - causes rasterization on iOS */
     filter: none !important;
     /* Remove transforms */
