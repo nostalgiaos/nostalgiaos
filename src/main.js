@@ -1415,6 +1415,13 @@ function showHardwearPage() {
       }
     })
   })
+  
+  // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 100)
+  }
 }
 
 // Show README modal overlay
