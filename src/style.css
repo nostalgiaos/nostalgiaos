@@ -199,14 +199,14 @@ body.booted {
 }
 
 .mac-text {
-  font-family: 'EB Garamond', 'Garamond', 'Apple Garamond', serif;
+  font-family: 'Apple Garamond', 'EB Garamond', 'Garamond', 'Times New Roman', serif;
   font-weight: 400;
   color: #000;
   font-size: 36px;
 }
 
 .os-text {
-  font-family: 'EB Garamond', 'Garamond', 'Apple Garamond', serif;
+  font-family: 'Apple Garamond Light', 'Apple Garamond', 'EB Garamond', 'Garamond', 'Times New Roman', serif;
   font-weight: 300;
   color: #0066cc;
   font-size: 36px;
@@ -417,7 +417,7 @@ body.booted {
   color: #000000;
   font-size: 14px;
   font-weight: 300;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   cursor: pointer;
   padding: 0 40px;
   position: relative;
@@ -623,7 +623,7 @@ body.booted {
 
 /* Page Title - DEFAULT: Static positioning for mobile */
 .page-title {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 48px;
   font-weight: 300;
   color: #000000;
@@ -641,9 +641,9 @@ body.booted {
   margin-top: 0 !important;
 }
 
-/* Homepage title - Apple Garamond Regular */
+/* Homepage title - EB Garamond Regular */
 .shop-container.home-page-container > .page-title {
-  font-family: "Apple Garamond", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-weight: 400;
 }
 
@@ -875,7 +875,7 @@ body.mobile-view .shop-container.home-page-container > .page-title {
   z-index: 1 !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
-  font-family: "Apple Garamond", "Garamond", "Times New Roman", serif !important;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif !important;
   font-weight: 400 !important;
 }
 
@@ -1108,7 +1108,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .homepage-notify-text {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 16px;
   color: #666666;
   margin: 0 0 12px 0;
@@ -1116,7 +1116,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .homepage-notify-link {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 16px;
   color: #4661C5;
   text-decoration: none;
@@ -1311,7 +1311,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .product-showcase-name {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 22px;
   font-weight: 400;
   color: #000000;
@@ -1385,7 +1385,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .hero-title {
-  font-family: "Apple Garamond Light";
+  font-family: "EB Garamond";
   font-size: 84px;
   font-weight: 500;
   color: #000000;
@@ -1395,7 +1395,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .hero-subtitle {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 32px;
   font-weight: 500;
   color: #000000;
@@ -1404,7 +1404,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .hero-description {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   color: #000000;
@@ -1679,7 +1679,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .product-name {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   font-weight: 400;
   color: #333333;
@@ -1689,7 +1689,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .product-price {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 16px;
   font-weight: 400;
   color: #000000;
@@ -1727,7 +1727,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 .retro-select {
   width: 100%;
   padding: 4px 6px;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 11px;
   color: #333333;
   background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%);
@@ -1772,7 +1772,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 .add-to-cart-btn {
   width: 100%;
   padding: 5px 8px;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 12px;
   font-weight: 400;
   color: #000000;
@@ -1834,7 +1834,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 
 
 .basket-total {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 20px;
   font-weight: 400;
   color: #333333;
@@ -1889,20 +1889,20 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 .basket-item-name {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   color: #000000;
 }
 
 .basket-item-info {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   color: #666666;
 }
 
 .basket-item-quantity {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   color: #333333;
 }
@@ -1940,7 +1940,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 .empty-basket {
   text-align: center;
   padding: 60px 20px;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 24px;
   color: #666666;
 }
@@ -1998,7 +1998,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   max-width: 300px;
   margin: 0 auto;
   padding: 12px 24px;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   color: #000000;
@@ -2487,7 +2487,7 @@ a {
 /* Use .flag-product .product-detail-header and .flag-product .product-detail-name to style only the flag product */
 
 .product-detail-name {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 36px;
   font-weight: 300;
   color: #000000;
@@ -2501,7 +2501,7 @@ a {
 }
 
 .product-detail-price {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 24px;
   font-weight: 400;
   color: #333333;
@@ -2514,7 +2514,7 @@ a {
 }
 
 .out-of-stock-label {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   font-weight: 400;
   color: #666666;
@@ -2557,7 +2557,7 @@ a {
 }
 
 .specs-title {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   color: #000000;
@@ -2620,7 +2620,7 @@ a {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   color: #333333;
   border-bottom: 1px solid #E8E8E8;
@@ -2643,7 +2643,7 @@ a {
 .notify-me-btn {
   width: 100%;
   padding: 12px 24px;
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
   font-weight: 400;
   color: #333333;
@@ -2953,7 +2953,7 @@ a {
 }
 
 .mac-modal-btn.primary {
-  font-family: "Apple Garamond Light", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   background: #FFFFFF;
   color: #333333;
   border: 1px solid #CCCCCC;
