@@ -3455,6 +3455,8 @@ a {
   /* Product header - smaller text */
   .product-name {
     font-size: 12px;
+    font-family: "Times New Roman", "Times", serif !important;
+    font-weight: 300;
   }
   
   .product-price {
@@ -3553,9 +3555,11 @@ a {
     height: 280px;
   }
   
-  /* Product showcase name and price - adjust sizes */
+  /* Product showcase name and price - adjust sizes and font */
   .product-showcase-name {
     font-size: 18px;
+    font-family: "Times New Roman", "Times", serif !important;
+    font-weight: 300;
   }
   
   .product-showcase-price {
@@ -3684,6 +3688,8 @@ a {
   
   .product-showcase-name {
     font-size: 16px;
+    font-family: "Times New Roman", "Times", serif !important;
+    font-weight: 300;
   }
   
   .product-showcase-price {
