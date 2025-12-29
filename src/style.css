@@ -3609,51 +3609,30 @@ a {
     height: 280px;
   }
   
-  /* Fix SVG blurriness on iOS Safari - use background-image instead of img tag */
+  /* Inline SVGs will replace img tags on mobile via JavaScript */
+  /* Ensure inline SVGs render properly */
+  .product-showcase-image svg,
+  .product-detail-image svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+  
   .product-showcase-image {
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-  }
-  
-  /* Hide img tag on mobile and use background-image instead */
-  .product-showcase-image img {
-    display: none !important;
-  }
-  
-  /* Set background-image based on data attribute or use CSS to target specific products */
-  .product-showcase-item[data-product="essentials-01"] .product-showcase-image {
-    background-image: url('/cigtshirt.svg') !important;
     width: 250px !important;
     height: 250px !important;
     margin: 0 auto !important;
   }
   
-  .product-showcase-item[data-product="essentials-02"] .product-showcase-image {
-    background-image: url('/jeans1.svg') !important;
-    width: 250px !important;
-    height: 250px !important;
-    margin: 0 auto !important;
-  }
-  
-  .product-showcase-item[data-product="essentials-03"] .product-showcase-image {
-    background-image: url('/finderhoodie.svg') !important;
-    width: 250px !important;
-    height: 250px !important;
-    margin: 0 auto !important;
-  }
-  
-  .product-showcase-item[data-product="marlboros-01"] .product-showcase-image {
-    background-image: url('/MarlborOS.svg') !important;
+  .marlboros-item .product-showcase-image {
     width: 180px !important;
     height: 180px !important;
-    margin: 0 auto !important;
   }
   
-  .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-image {
-    background-image: url('/FinderUSAflag.svg') !important;
-    width: 250px !important;
-    height: 250px !important;
+  .product-detail-image {
+    width: 280px !important;
+    height: 280px !important;
     margin: 0 auto !important;
   }
   
@@ -3661,22 +3640,6 @@ a {
   .product-showcase-item:hover .product-showcase-image {
     transform: none !important;
   }
-  
-  /* Fix product detail page SVG images on mobile - use background-image */
-  .product-detail-image {
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    width: 280px !important;
-    height: 280px !important;
-    margin: 0 auto !important;
-  }
-  
-  .product-detail-image img {
-    display: none !important;
-  }
-  
-  /* Background-image will be set via JavaScript inline style */
   
   /* Product showcase name and price - adjust sizes and font */
   .product-showcase-name {

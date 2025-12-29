@@ -1,6 +1,49 @@
 import './style.css'
 import { createSpinningModel } from './threeModelLoader.js'
 
+// Helper function to convert img tags to inline SVGs on mobile (prevents iOS Safari rasterization)
+async function convertImgToInlineSVG(imgElement) {
+  if (!imgElement || imgElement.tagName !== 'IMG') return
+  
+  const src = imgElement.getAttribute('src')
+  if (!src || !src.endsWith('.svg')) return
+  
+  try {
+    const response = await fetch(src)
+    const svgText = await response.text()
+    const parser = new DOMParser()
+    const svgDoc = parser.parseFromString(svgText, 'image/svg+xml')
+    const svgElement = svgDoc.querySelector('svg')
+    
+    if (svgElement) {
+      // Copy width/height from img to svg
+      const width = imgElement.getAttribute('width') || '250'
+      const height = imgElement.getAttribute('height') || '250'
+      svgElement.setAttribute('width', width)
+      svgElement.setAttribute('height', height)
+      svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet')
+      svgElement.style.width = '100%'
+      svgElement.style.height = '100%'
+      svgElement.style.maxWidth = '100%'
+      svgElement.style.maxHeight = '100%'
+      
+      // Replace img with inline SVG
+      imgElement.parentNode.replaceChild(svgElement, imgElement)
+    }
+  } catch (error) {
+    console.error('Failed to convert SVG to inline:', error)
+  }
+}
+
+// Convert all SVG img tags to inline SVGs on mobile
+async function convertAllSVGImagesToInline() {
+  if (window.innerWidth > 768) return // Only on mobile
+  
+  const svgImages = document.querySelectorAll('img[src$=".svg"]')
+  const promises = Array.from(svgImages).map(img => convertImgToInlineSVG(img))
+  await Promise.all(promises)
+}
+
 // Date and time display functions
 function formatDateTime() {
   const now = new Date()
@@ -768,6 +811,13 @@ function showSoftwearPage() {
       }
     })
   })
+  
+  // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 100)
+  }
 }
 
 // Product Detail Page
@@ -1018,14 +1068,11 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }
   }
   
-  // Set background-image for product detail image on mobile (to prevent SVG rasterization)
-  const productDetailImage = document.querySelector('.product-detail-image[data-product-image]')
-  if (productDetailImage && window.innerWidth <= 768) {
-    const imageUrl = productDetailImage.getAttribute('data-product-image')
-    if (imageUrl) {
-      productDetailImage.style.setProperty('--product-bg-image', `url(${imageUrl})`)
-      productDetailImage.style.backgroundImage = `url(${imageUrl})`
-    }
+  // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 100)
   }
   
   // Notify Me button handler
