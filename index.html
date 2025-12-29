@@ -19,6 +19,21 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- Supabase Client -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+      // Initialize Supabase client
+      // Get your anon key from: Supabase Dashboard → Settings → API → anon public
+      const SUPABASE_URL = 'https://ugftdgfrvmfzsmcozmwt.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVnZnRkZ2Zydm1menNtY296bXd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5NzMyMjksImV4cCI6MjA4MjU0OTIyOX0.lnexIkgKUO48rJINy5d4DCpORHLucJZvvOqzLaPLBfo';
+      
+      // Create Supabase client (safe to expose anon key on frontend)
+      if (SUPABASE_ANON_KEY !== 'YOUR_ANON_PUBLIC_KEY') {
+        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } else {
+        console.warn('Supabase anon key not configured. Please update index.html with your anon key.');
+      }
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

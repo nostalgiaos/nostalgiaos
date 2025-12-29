@@ -1063,10 +1063,9 @@ function showNotifyModal(productName) {
             <input 
               type="tel" 
               class="mac-modal-input phone-input" 
-              placeholder="101-010-1010" 
+              placeholder="101-010-1010 (optional)" 
               id="notify-phone"
               maxlength="12"
-              required
             />
           </div>
           <div class="mac-modal-buttons">
@@ -1135,61 +1134,78 @@ function showNotifyModal(productName) {
     e.preventDefault()
     const email = modalContainer.querySelector('#notify-email').value.trim()
     const phoneInput = modalContainer.querySelector('#notify-phone')
-    const phone = phoneInput ? phoneInput.value.replace(/\D/g, '') : ''
+    const phoneRaw = phoneInput ? phoneInput.value.replace(/\D/g, '') : ''
     const countryCode = modalContainer.querySelector('#notify-country-code')?.value || '+1'
     
-    // Require both email and phone
+    // Require email
     if (!email) {
       alert('Please enter your email address.')
       modalContainer.querySelector('#notify-email').focus()
       return
     }
     
-    if (!phone || phone.length !== 10) {
-      alert('Please enter a valid 10-digit phone number.')
+    // Format phone number (optional)
+    // If phone is provided, validate it's 10 digits and format with country code
+    let formattedPhone = null
+    if (phoneRaw && phoneRaw.length === 10) {
+      formattedPhone = countryCode + ' ' + phoneInput.value
+    } else if (phoneRaw && phoneRaw.length > 0) {
+      alert('Please enter a valid 10-digit phone number, or leave it blank.')
       if (phoneInput) phoneInput.focus()
       return
     }
     
-    // Format phone number with country code
-    const formattedPhone = countryCode + ' ' + phoneInput.value
-    
-    // Show loading state (optional - you could add a loading spinner here)
+    // Show loading state
     const submitButton = modalContainer.querySelector('button[type="submit"]')
     const originalButtonText = submitButton.textContent
-    submitButton.textContent = 'Sending...'
+    submitButton.textContent = 'Adding you to the list…'
     submitButton.disabled = true
     
-    // Send request to API
+    // Check if Supabase client is available
+    if (!window.supabaseClient) {
+      alert('Error: Supabase client not initialized. Please check your configuration.')
+      submitButton.textContent = originalButtonText
+      submitButton.disabled = false
+      return
+    }
+    
+    // Insert into Supabase
     try {
-      const response = await fetch('/api/notify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          phone: phone.replace(/\D/g, ''),
-          countryCode,
-          productName
-        })
-      })
+      const { data, error } = await window.supabaseClient
+        .from('waitlist')
+        .insert([{ 
+          email, 
+          phone: formattedPhone,
+          product_name: productName
+        }])
       
-      const data = await response.json()
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to submit notification request')
+      if (error) {
+        // Handle duplicate email (unique constraint violation)
+        if (error.code === '23505') {
+          alert('You\'re already on the list ✔')
+          closeModal()
+        } else if (error.code === '42P01') {
+          // Table doesn't exist
+          alert('Error: The waitlist table doesn\'t exist. Please create it in Supabase first.')
+          console.error('Supabase error:', error)
+        } else if (error.message && error.message.includes('JWT')) {
+          // Invalid anon key
+          alert('Error: Invalid Supabase configuration. Please check your anon key in index.html')
+          console.error('Supabase error:', error)
+        } else {
+          // Other errors
+          alert(`Error: ${error.message || 'Something went wrong. Please try again.'}`)
+          console.error('Supabase error:', error)
+        }
+      } else {
+        // Success message
+        const phoneMessage = formattedPhone ? ` and ${formattedPhone}` : ''
+        alert(`You're on the list ✔\nWe'll notify you at ${email}${phoneMessage} when ${productName} is back in stock!`)
+        closeModal()
       }
-      
-      // Success - show confirmation
-      alert(data.message || `We'll notify you at ${email} and ${formattedPhone} when ${productName} is back in stock!`)
-      closeModal()
-      
     } catch (error) {
       console.error('Error submitting notification:', error)
-      // Fallback to showing alert even if API fails
-      alert(`We'll notify you at ${email} and ${formattedPhone} when ${productName} is back in stock!`)
-      closeModal()
+      alert(`Error: ${error.message || 'Something went wrong. Please check the browser console for details.'}`)
     } finally {
       // Restore button state
       if (submitButton) {
