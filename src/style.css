@@ -3609,19 +3609,57 @@ a {
     height: 280px;
   }
   
-  /* Improve SVG rendering quality on mobile/iOS - remove filter to prevent rasterization */
+  /* Fix SVG blurriness on iOS Safari - prevent rasterization */
   .product-showcase-image img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    /* Remove filter on mobile - iOS Safari rasterizes SVGs with filters, causing blurriness */
+    /* Use fixed pixel sizes instead of percentages to prevent rasterization */
+    max-width: 250px !important;
+    max-height: 250px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+    /* Remove all transforms that cause rasterization */
+    transform: none !important;
+    -webkit-transform: none !important;
+    /* Remove filter - causes rasterization on iOS */
     filter: none !important;
-    /* Ensure proper scaling */
+    /* Force vector rendering */
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
     image-rendering: auto;
-    -webkit-font-smoothing: antialiased;
+    /* Remove hardware acceleration hints that can cause issues */
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    will-change: auto;
+  }
+  
+  /* Disable hover scale on mobile */
+  .product-showcase-item:hover .product-showcase-image img {
+    transform: none !important;
+    filter: none !important;
+  }
+  
+  /* MarlborOS specific size on mobile */
+  .marlboros-item .product-showcase-image img {
+    max-width: 180px !important;
+    max-height: 180px !important;
+  }
+  
+  /* Fix product detail page SVG images on mobile */
+  .product-detail-image img {
+    /* Use fixed pixel sizes instead of percentages */
+    max-width: 280px !important;
+    max-height: 280px !important;
+    width: auto !important;
+    height: auto !important;
+    /* Remove filter - causes rasterization on iOS */
+    filter: none !important;
+    /* Remove transforms */
+    transform: none !important;
+    -webkit-transform: none !important;
+    /* Force vector rendering */
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
+    image-rendering: auto;
   }
   
   /* Product showcase name and price - adjust sizes and font */
