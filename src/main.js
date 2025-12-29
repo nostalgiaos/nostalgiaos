@@ -42,16 +42,42 @@ async function convertImgToInlineSVG(imgElement) {
     const svgElement = svgDoc.querySelector('svg')
     
     if (svgElement) {
-      // Copy width/height from img to svg
-      const width = imgElement.getAttribute('width') || '250'
-      const height = imgElement.getAttribute('height') || '250'
-      svgElement.setAttribute('width', width)
-      svgElement.setAttribute('height', height)
+      // Get desired display size from img element
+      const displayWidth = imgElement.getAttribute('width') || '250'
+      const displayHeight = imgElement.getAttribute('height') || '250'
+      
+      // Get original viewBox from SVG (preserve it!)
+      const originalViewBox = svgElement.getAttribute('viewBox')
+      if (!originalViewBox && svgElement.getAttribute('width') && svgElement.getAttribute('height')) {
+        // Create viewBox if it doesn't exist
+        const origWidth = svgElement.getAttribute('width')
+        const origHeight = svgElement.getAttribute('height')
+        svgElement.setAttribute('viewBox', `0 0 ${origWidth} ${origHeight}`)
+      }
+      
+      // Set explicit dimensions matching display size
+      svgElement.setAttribute('width', displayWidth)
+      svgElement.setAttribute('height', displayHeight)
       svgElement.setAttribute('preserveAspectRatio', 'xMidYMid meet')
-      svgElement.style.width = '100%'
-      svgElement.style.height = '100%'
-      svgElement.style.maxWidth = '100%'
-      svgElement.style.maxHeight = '100%'
+      
+      // Remove any existing width/height styles that might interfere
+      svgElement.removeAttribute('style')
+      
+      // Set inline styles for proper rendering
+      svgElement.style.cssText = `
+        width: ${displayWidth}px !important;
+        height: ${displayHeight}px !important;
+        max-width: ${displayWidth}px !important;
+        max-height: ${displayHeight}px !important;
+        display: block;
+        shape-rendering: geometricPrecision;
+        text-rendering: geometricPrecision;
+        image-rendering: auto;
+      `
+      
+      // Ensure no transforms that could cause rasterization
+      svgElement.style.transform = 'none'
+      svgElement.style.webkitTransform = 'none'
       
       // Replace img with inline SVG
       imgElement.parentNode.replaceChild(svgElement, imgElement)
