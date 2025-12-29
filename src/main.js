@@ -1,6 +1,32 @@
 import './style.css'
 import { createSpinningModel } from './threeModelLoader.js'
 
+// Helper function to reset viewport zoom on mobile (prevents zoom persistence across page navigations)
+function resetViewportZoom() {
+  if (window.innerWidth > 768) return // Only on mobile
+  
+  const viewport = document.querySelector('meta[name="viewport"]')
+  if (!viewport) return
+  
+  // Get current content
+  const currentContent = viewport.getAttribute('content')
+  
+  // Temporarily set to a different scale to force reset
+  viewport.setAttribute('content', 'width=device-width, initial-scale=0.99')
+  
+  // Use requestAnimationFrame to ensure the change takes effect, then reset to normal
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no')
+      
+      // After a brief moment, restore user scaling capability
+      setTimeout(() => {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0')
+      }, 100)
+    })
+  })
+}
+
 // Helper function to convert img tags to inline SVGs on mobile (prevents iOS Safari rasterization)
 async function convertImgToInlineSVG(imgElement) {
   if (!imgElement || imgElement.tagName !== 'IMG') return
@@ -267,6 +293,9 @@ async function showBootScreen() {
 }
 
 function showMainContent() {
+  // Reset viewport zoom on mobile (prevents zoom persistence)
+  resetViewportZoom()
+  
   // Prevent scroll restoration
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual'
@@ -556,6 +585,9 @@ function showMainContent() {
 }
 
 function showSoftwearPage() {
+  // Reset viewport zoom on mobile (prevents zoom persistence)
+  resetViewportZoom()
+  
   // Force scroll to top before rendering
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   window.scrollTo(0, 0)
@@ -822,6 +854,9 @@ function showSoftwearPage() {
 
 // Product Detail Page
 function showProductDetailPage(productId, productName, productImage, price, activeSection = 'softwear') {
+  // Reset viewport zoom on mobile (prevents zoom persistence)
+  resetViewportZoom()
+  
   // Force scroll to top before rendering
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   window.scrollTo(0, 0)
@@ -1284,6 +1319,9 @@ function showNotifyModal(productName) {
 }
 
 function showHardwearPage() {
+  // Reset viewport zoom on mobile (prevents zoom persistence)
+  resetViewportZoom()
+  
   // Force scroll to top before rendering
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   window.scrollTo(0, 0)
@@ -1669,6 +1707,9 @@ function startTerminalAnimation() {
 }
 
 function showBasketPage() {
+  // Reset viewport zoom on mobile (prevents zoom persistence)
+  resetViewportZoom()
+  
   // Force scroll to top before rendering
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   window.scrollTo(0, 0)
