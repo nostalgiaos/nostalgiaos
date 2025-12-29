@@ -1795,6 +1795,13 @@ function showBasketPage() {
     })
   })
   
+  // Convert SVG images to inline on mobile (prevents iOS Safari rasterization)
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      convertAllSVGImagesToInline()
+    }, 100)
+  }
+  
   // Checkout button
   const checkoutBtn = document.querySelector('.checkout-btn')
   if (checkoutBtn) {
