@@ -908,6 +908,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     overflow-x: hidden !important;
     overflow-y: scroll !important;
     -webkit-overflow-scrolling: touch !important;
+    background: #FDFDFD !important;
   }
   
   body {
@@ -918,6 +919,11 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     margin-top: 0 !important;
     height: 100% !important;
     position: relative !important;
+    background: #FDFDFD !important;
+  }
+  
+  .monitor-wrapper {
+    background: #FDFDFD !important;
     -webkit-overflow-scrolling: touch !important;
   }
   
@@ -1014,6 +1020,14 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 @media (max-width: 480px) {
+  html {
+    background: #FDFDFD !important;
+  }
+  
+  body {
+    background: #FDFDFD !important;
+  }
+  
   .shop-container.home-page-container {
     padding: 80px 15px 10px !important;
     padding-top: 80px !important;
