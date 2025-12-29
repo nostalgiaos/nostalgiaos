@@ -1659,7 +1659,7 @@ function showBasketPage() {
                     ? basket.map(item => `
                         <div class="basket-item">
                           <div class="basket-item-image">
-                            <img src="/cigtshirt.svg" alt="${item.name}" />
+                            <img src="/cigtshirt.svg" alt="${item.name}" width="797" height="797" />
                           </div>
                           <div class="basket-item-details">
                             <div class="basket-item-name">${item.name}</div>
