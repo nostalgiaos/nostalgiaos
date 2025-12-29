@@ -50,6 +50,15 @@ body {
   }
 }
 
+/* Boot screen active - set purple background for overscroll bounce */
+body:not(.booted) {
+  background: #9C9CCE !important;
+}
+
+body:not(.booted) html {
+  background: #9C9CCE !important;
+}
+
 body.booted {
   background: #2a2a2a;
   color: #000000;
@@ -911,6 +920,11 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     background: #FDFDFD !important;
   }
   
+  /* Boot screen: purple background for overscroll */
+  body:not(.booted) html {
+    background: #9C9CCE !important;
+  }
+  
   body {
     scroll-behavior: auto !important;
     overflow-x: hidden !important;
@@ -922,9 +936,19 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     background: #FDFDFD !important;
   }
   
+  /* Boot screen: purple background for overscroll */
+  body:not(.booted) {
+    background: #9C9CCE !important;
+  }
+  
   .monitor-wrapper {
     background: #FDFDFD !important;
     -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Boot screen: purple background for overscroll */
+  body:not(.booted) .monitor-wrapper {
+    background: #9C9CCE !important;
   }
   
   .monitor-wrapper {
@@ -1024,8 +1048,18 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     background: #FDFDFD !important;
   }
   
+  /* Boot screen: purple background for overscroll */
+  body:not(.booted) html {
+    background: #9C9CCE !important;
+  }
+  
   body {
     background: #FDFDFD !important;
+  }
+  
+  /* Boot screen: purple background for overscroll */
+  body:not(.booted) {
+    background: #9C9CCE !important;
   }
   
   .shop-container.home-page-container {
