@@ -354,23 +354,17 @@ function showMainContent() {
   // Add mobile class to body for CSS targeting
   if (isMobileView) {
     document.body.classList.add('mobile-view')
-    // Lock body to top BEFORE rendering
-    document.body.style.position = 'fixed'
-    document.body.style.top = '0'
-    document.body.style.left = '0'
-    document.body.style.width = '100%'
-    document.body.style.overflow = 'hidden'
-    document.body.style.margin = '0'
-    document.body.style.padding = '0'
-    
-    // Force scroll to absolute top
+    // Force scroll to absolute top BEFORE locking
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     window.scrollTo(0, 0)
     if (document.documentElement) {
       document.documentElement.scrollTop = 0
       document.documentElement.style.scrollTop = '0'
+      document.documentElement.style.overflow = 'hidden'
     }
     if (document.body) {
       document.body.scrollTop = 0
+      document.body.style.overflow = 'hidden'
     }
     if (document.scrollingElement) {
       document.scrollingElement.scrollTop = 0
@@ -468,13 +462,12 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Keep body fixed and ensure scroll is at top before unlocking
+  // MOBILE: Ensure scroll is at top before unlocking overflow
   if (isMobileView) {
-    // Keep body fixed to prevent any scrolling during render
     // Wait for content to render, then ensure scroll is at top
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        // Force scroll to top multiple times
+        // Force scroll to top multiple times while overflow is still hidden
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
         window.scrollTo(0, 0)
         if (document.documentElement) {
@@ -490,9 +483,9 @@ function showMainContent() {
           document.scrollingElement.scrollTo(0, 0)
         }
         
-        // Wait a bit more, then unlock body
+        // Wait a bit more, then unlock overflow
         setTimeout(() => {
-          // Final scroll check before unlocking
+          // Final scroll check before unlocking - ensure we're at 0
           window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
           window.scrollTo(0, 0)
           if (document.documentElement) {
@@ -502,15 +495,11 @@ function showMainContent() {
             document.body.scrollTop = 0
           }
           
-          // Now unlock body and enable scrolling
-          document.body.style.position = 'relative'
-          document.body.style.top = 'auto'
-          document.body.style.left = 'auto'
-          document.body.style.width = 'auto'
-          document.body.style.overflow = 'auto'
+          // Now unlock overflow and enable scrolling
           document.documentElement.style.overflow = 'auto'
+          document.body.style.overflow = 'auto'
           
-          // One more scroll to top after unlocking
+          // Immediately after unlocking, force scroll to top again
           requestAnimationFrame(() => {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
             window.scrollTo(0, 0)
