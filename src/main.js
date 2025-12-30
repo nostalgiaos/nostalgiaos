@@ -468,34 +468,10 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Wait for CSS to load on Vercel, then force nav bar to be fixed
+  // MOBILE: Ensure everything is locked before showing content
   if (isMobileView) {
-    // On Vercel, CSS might load after JS, so we need to wait and use !important
-    const applyNavBarStyles = () => {
-      const navBar = document.querySelector('.top-nav-bar')
-      if (navBar) {
-        // Use setProperty with 'important' to override any CSS that loads later
-        navBar.style.setProperty('position', 'fixed', 'important')
-        navBar.style.setProperty('top', '5px', 'important')
-        navBar.style.setProperty('left', '50%', 'important')
-        navBar.style.setProperty('transform', 'translateX(-50%)', 'important')
-        navBar.style.setProperty('width', 'calc(100% - 20px)', 'important')
-        navBar.style.setProperty('height', '40px', 'important')
-        navBar.style.setProperty('margin', '0 auto 20px auto', 'important')
-        navBar.style.setProperty('z-index', '10000', 'important')
-        
-        // Verify it's actually fixed
-        const computedStyle = window.getComputedStyle(navBar)
-        if (computedStyle.position !== 'fixed') {
-          // If still not fixed, the CSS might be overriding - try again
-          setTimeout(() => {
-            navBar.style.setProperty('position', 'fixed', 'important')
-            navBar.style.setProperty('top', '5px', 'important')
-          }, 10)
-        }
-      }
-      
-      // Force scroll to top
+    const showContent = () => {
+      // Force scroll to top one more time
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
       window.scrollTo(0, 0)
       if (document.documentElement) {
@@ -504,19 +480,48 @@ function showMainContent() {
       if (document.body) {
         document.body.scrollTop = 0
       }
+      
+      // Verify nav bar is fixed
+      const navBar = document.querySelector('.top-nav-bar')
+      if (navBar) {
+        const computedStyle = window.getComputedStyle(navBar)
+        if (computedStyle.position !== 'fixed') {
+          // Force it to be fixed
+          navBar.style.setProperty('position', 'fixed', 'important')
+          navBar.style.setProperty('top', '5px', 'important')
+          navBar.style.setProperty('left', '50%', 'important')
+          navBar.style.setProperty('transform', 'translateX(-50%)', 'important')
+          navBar.style.setProperty('width', 'calc(100% - 20px)', 'important')
+          navBar.style.setProperty('height', '40px', 'important')
+          navBar.style.setProperty('margin', '0 auto 20px auto', 'important')
+          navBar.style.setProperty('z-index', '10000', 'important')
+        }
+      }
+      
+      // Now show the content
+      const wrapper = document.querySelector('.monitor-wrapper')
+      if (wrapper) {
+        wrapper.style.opacity = '1'
+        wrapper.style.transition = 'opacity 0.1s'
+      }
     }
     
-    // Apply immediately
-    applyNavBarStyles()
-    
-    // Also apply after multiple delays to catch CSS loading at different times (Vercel timing issue)
+    // Wait for CSS to potentially load, then show content
+    // Use multiple attempts to catch different loading scenarios
     requestAnimationFrame(() => {
-      requestAnimationFrame(applyNavBarStyles)
+      requestAnimationFrame(showContent)
     })
-    setTimeout(applyNavBarStyles, 0)
-    setTimeout(applyNavBarStyles, 50)
-    setTimeout(applyNavBarStyles, 100)
-    setTimeout(applyNavBarStyles, 200)
+    setTimeout(showContent, 50)
+    setTimeout(showContent, 100)
+    setTimeout(showContent, 200)
+    // Final fallback
+    setTimeout(showContent, 500)
+  } else {
+    // Desktop: show immediately
+    const wrapper = document.querySelector('.monitor-wrapper')
+    if (wrapper) {
+      wrapper.style.opacity = '1'
+    }
   }
   
   // MOBILE: Ensure scroll is at top before unlocking overflow
