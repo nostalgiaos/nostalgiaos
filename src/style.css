@@ -3429,6 +3429,174 @@ a {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, transparent 100%);
 }
 
+/* Success Modal - Styled to match site aesthetic */
+.success-modal-inline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10001;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.success-modal-inline .success-modal {
+  pointer-events: auto;
+  position: relative;
+}
+
+.success-modal {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%);
+  border: 1px solid #000000;
+  border-bottom: 1px solid #333333;
+  border-radius: 5px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 400px;
+  max-width: 500px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.success-modal-title-bar {
+  background: linear-gradient(180deg, #E8E8E8 0%, #D0D0D0 100%);
+  border-bottom: 1px solid #999999;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 22px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.success-modal-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  line-height: 14px;
+  pointer-events: none;
+}
+
+.success-modal-content {
+  padding: 32px 38px;
+  background: #FFFFFF;
+  color: #000000;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 48px;
+  color: #158A1F;
+  margin-bottom: 16px;
+  line-height: 1;
+  font-weight: normal;
+}
+
+.success-modal-message {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  color: #000000;
+  text-align: center;
+  white-space: pre-line;
+}
+
+.success-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.success-modal-btn {
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: linear-gradient(180deg, #F8F8F8 0%, #E8E8E8 100%);
+  color: #000000;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+}
+
+.success-modal-btn:hover {
+  background: linear-gradient(180deg, #E8E8E8 0%, #D8D8D8 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.success-modal-btn:active {
+  background: linear-gradient(180deg, #D8D8D8 0%, #C8C8C8 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+.success-modal-btn.primary {
+  background: linear-gradient(180deg, #0066CC 0%, #0052A3 100%);
+  color: #FFFFFF;
+  border-color: #004080;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.success-modal-btn.primary:hover {
+  background: linear-gradient(180deg, #0052A3 0%, #004080 100%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 2px 4px rgba(0, 102, 204, 0.3);
+}
+
+.success-modal-btn.primary:active {
+  background: linear-gradient(180deg, #004080 0%, #003366 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile styles for success modal */
+@media (max-width: 768px) {
+  .success-modal {
+    min-width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+    margin: 20px;
+  }
+  
+  .success-modal-content {
+    padding: 24px 20px;
+  }
+  
+  .success-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+  
+  .success-modal-message {
+    font-size: 12px;
+    margin-bottom: 20px;
+  }
+}
+
 /* ============================================
    MOBILE RESPONSIVE STYLES
    ============================================ */
