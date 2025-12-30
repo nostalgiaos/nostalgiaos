@@ -468,29 +468,55 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Unlock body and enable scrolling AFTER content is rendered
+  // MOBILE: Keep body fixed and ensure scroll is at top before unlocking
   if (isMobileView) {
-    // Wait for next frame to ensure DOM is ready
+    // Keep body fixed to prevent any scrolling during render
+    // Wait for content to render, then ensure scroll is at top
     requestAnimationFrame(() => {
-      // Ensure we're at absolute top
-      window.scrollTo(0, 0)
-      document.documentElement.scrollTop = 0
-      document.body.scrollTop = 0
-      
-      // Unlock body and enable scrolling
-      setTimeout(() => {
-        document.body.style.position = 'relative'
-        document.body.style.top = 'auto'
-        document.body.style.left = 'auto'
-        document.body.style.width = 'auto'
-        document.body.style.overflow = 'auto'
-        document.documentElement.style.overflow = 'auto'
-        
-        // Final scroll to top
+      requestAnimationFrame(() => {
+        // Force scroll to top multiple times
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
         window.scrollTo(0, 0)
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
-      }, 150)
+        if (document.documentElement) {
+          document.documentElement.scrollTop = 0
+          document.documentElement.scrollTo(0, 0)
+        }
+        if (document.body) {
+          document.body.scrollTop = 0
+          document.body.scrollTo(0, 0)
+        }
+        if (document.scrollingElement) {
+          document.scrollingElement.scrollTop = 0
+          document.scrollingElement.scrollTo(0, 0)
+        }
+        
+        // Wait a bit more, then unlock body
+        setTimeout(() => {
+          // Final scroll check before unlocking
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+          window.scrollTo(0, 0)
+          if (document.documentElement) {
+            document.documentElement.scrollTop = 0
+          }
+          if (document.body) {
+            document.body.scrollTop = 0
+          }
+          
+          // Now unlock body and enable scrolling
+          document.body.style.position = 'relative'
+          document.body.style.top = 'auto'
+          document.body.style.left = 'auto'
+          document.body.style.width = 'auto'
+          document.body.style.overflow = 'auto'
+          document.documentElement.style.overflow = 'auto'
+          
+          // One more scroll to top after unlocking
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+            window.scrollTo(0, 0)
+          })
+        }, 200)
+      })
     })
   } else {
     // Desktop: smooth scrolling
