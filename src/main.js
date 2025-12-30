@@ -470,28 +470,31 @@ function showMainContent() {
   
   // MOBILE: Immediately force nav bar to be fixed and ensure scroll is at top
   if (isMobileView) {
-    // Force nav bar to be fixed immediately via inline styles (before CSS applies)
-    const navBar = document.querySelector('.top-nav-bar')
-    if (navBar) {
-      navBar.style.position = 'fixed'
-      navBar.style.top = '0'
-      navBar.style.left = '50%'
-      navBar.style.transform = 'translateX(-50%)'
-      navBar.style.width = 'calc(100% - 20px)'
-      navBar.style.height = '40px'
-      navBar.style.margin = '5px auto 20px auto'
-      navBar.style.zIndex = '10000'
-    }
-    
-    // Force scroll to top immediately after rendering
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    window.scrollTo(0, 0)
-    if (document.documentElement) {
-      document.documentElement.scrollTop = 0
-    }
-    if (document.body) {
-      document.body.scrollTop = 0
-    }
+    // Use setTimeout(0) to ensure DOM is ready
+    setTimeout(() => {
+      // Force nav bar to be fixed immediately via inline styles (before CSS applies)
+      const navBar = document.querySelector('.top-nav-bar')
+      if (navBar) {
+        navBar.style.position = 'fixed'
+        navBar.style.top = '0'
+        navBar.style.left = '50%'
+        navBar.style.transform = 'translateX(-50%)'
+        navBar.style.width = 'calc(100% - 20px)'
+        navBar.style.height = '40px'
+        navBar.style.margin = '5px auto 20px auto'
+        navBar.style.zIndex = '10000'
+      }
+      
+      // Force scroll to top immediately after rendering
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      window.scrollTo(0, 0)
+      if (document.documentElement) {
+        document.documentElement.scrollTop = 0
+      }
+      if (document.body) {
+        document.body.scrollTop = 0
+      }
+    }, 0)
   }
   
   // MOBILE: Ensure scroll is at top before unlocking overflow
