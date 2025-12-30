@@ -752,7 +752,7 @@ body.mobile-view #app {
 }
 
 body.mobile-view .shop-container.home-page-container {
-  padding-top: 0 !important;
+  padding-top: 50px !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 0 !important;
