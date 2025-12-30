@@ -354,17 +354,23 @@ function showMainContent() {
   // Add mobile class to body for CSS targeting
   if (isMobileView) {
     document.body.classList.add('mobile-view')
-    // Force scroll to absolute top BEFORE locking
+    // IMMEDIATELY lock scroll BEFORE any rendering
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     window.scrollTo(0, 0)
     if (document.documentElement) {
       document.documentElement.scrollTop = 0
       document.documentElement.style.scrollTop = '0'
       document.documentElement.style.overflow = 'hidden'
+      document.documentElement.style.position = 'fixed'
+      document.documentElement.style.width = '100%'
+      document.documentElement.style.top = '0'
     }
     if (document.body) {
       document.body.scrollTop = 0
       document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+      document.body.style.top = '0'
     }
     if (document.scrollingElement) {
       document.scrollingElement.scrollTop = 0
@@ -496,7 +502,13 @@ function showMainContent() {
           }
           
           // Now unlock overflow and enable scrolling
+          document.documentElement.style.position = 'static'
+          document.documentElement.style.width = 'auto'
+          document.documentElement.style.top = 'auto'
           document.documentElement.style.overflow = 'auto'
+          document.body.style.position = 'relative'
+          document.body.style.width = 'auto'
+          document.body.style.top = 'auto'
           document.body.style.overflow = 'auto'
           
           // Immediately after unlocking, force scroll to top again

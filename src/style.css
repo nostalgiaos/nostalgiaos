@@ -732,6 +732,8 @@ body.mobile-view html {
   overflow-x: hidden !important;
   overflow-y: auto !important;
   background: #FDFDFD !important;
+  /* Prevent initial scroll position */
+  scroll-top: 0 !important;
 }
 
 body.mobile-view .monitor-wrapper {
