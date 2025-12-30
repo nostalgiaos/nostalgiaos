@@ -514,7 +514,38 @@ function showMainContent() {
           requestAnimationFrame(() => {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
             window.scrollTo(0, 0)
+            if (document.documentElement) {
+              document.documentElement.scrollTop = 0
+            }
+            if (document.body) {
+              document.body.scrollTop = 0
+            }
           })
+          
+          // Monitor and correct scroll position for 1 second after unlocking
+          let scrollCheckCount = 0
+          const maxScrollChecks = 20 // Check 20 times over 1 second
+          const scrollMonitor = setInterval(() => {
+            scrollCheckCount++
+            if (scrollCheckCount >= maxScrollChecks) {
+              clearInterval(scrollMonitor)
+              return
+            }
+            
+            // Check if scroll has moved from top
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
+            if (currentScroll > 0) {
+              // Force back to top
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+              window.scrollTo(0, 0)
+              if (document.documentElement) {
+                document.documentElement.scrollTop = 0
+              }
+              if (document.body) {
+                document.body.scrollTop = 0
+              }
+            }
+          }, 50) // Check every 50ms
         }, 200)
       })
     })
@@ -560,6 +591,16 @@ function showMainContent() {
     setTimeout(scrollToTop, 200)
     setTimeout(scrollToTop, 500)
     setTimeout(scrollToTop, 1000)
+    
+    // Also run when page becomes visible (handles tab switching)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        scrollToTop()
+      }
+    })
+    
+    // Run on page focus
+    window.addEventListener('focus', scrollToTop)
   }
   
   // Listen for resize to scroll to top when switching to mobile
