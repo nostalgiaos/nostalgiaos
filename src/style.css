@@ -969,16 +969,18 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   
   .shop-container.home-page-container > .top-nav-bar {
     order: 1;
-    position: sticky !important;
-    top: 10px !important;
-    margin-top: 0 !important;
-    margin-bottom: 20px !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 5px auto 20px auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+    height: 40px !important;
     grid-column: auto !important;
-    z-index: 1000 !important;
+    z-index: 10000 !important;
   }
   
   .shop-container.home-page-container > .page-title {
@@ -3560,11 +3562,12 @@ a {
    ============================================ */
 @media (max-width: 768px) {
   /* Homepage container - single column on mobile - OVERRIDE DESKTOP PADDING */
+  /* Match padding-top with softwear/hardwear pages (50px for fixed nav bar) */
   .shop-container.home-page-container {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
-    padding: 80px 15px 0 !important;
-    padding-top: 80px !important;
+    padding: 50px 15px 0 !important;
+    padding-top: 50px !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
     padding-bottom: 0 !important;
@@ -3585,12 +3588,18 @@ a {
     grid-row: 2 !important;
   }
   
-  /* Ensure nav bar doesn't push content down too much */
+  /* Ensure nav bar doesn't push content down too much - match softwear/hardwear positioning */
   .shop-container.home-page-container > .top-nav-bar {
-    margin-bottom: 30px !important;
-    margin-top: 0 !important;
-    position: sticky !important;
-    top: 10px !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 5px auto 20px auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: calc(100% - 20px) !important;
+    height: 40px !important;
+    z-index: 10000 !important;
   }
   
   /* Make sure first product is visible */
