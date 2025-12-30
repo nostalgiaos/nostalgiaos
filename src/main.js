@@ -476,12 +476,12 @@ function showMainContent() {
       const navBar = document.querySelector('.top-nav-bar')
       if (navBar) {
         navBar.style.position = 'fixed'
-        navBar.style.top = '0'
+        navBar.style.top = '5px' // Match the margin from CSS
         navBar.style.left = '50%'
         navBar.style.transform = 'translateX(-50%)'
         navBar.style.width = 'calc(100% - 20px)'
         navBar.style.height = '40px'
-        navBar.style.margin = '5px auto 20px auto'
+        navBar.style.margin = '0 auto 20px auto' // Remove top margin since we're using top: 5px
         navBar.style.zIndex = '10000'
         
         // Verify it's actually fixed
