@@ -1090,18 +1090,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   margin-bottom: 80px;
 }
 
-/* MOBILE ONLY - Override nav bar */
-@media screen and (max-width: 768px) {
-  .shop-container.home-page-container > .top-nav-bar {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    margin-bottom: 20px !important;
-    grid-column: auto !important;
-    top: 10px !important;
-  }
-}
+/* MOBILE ONLY - Override nav bar - REMOVED conflicting top: 10px, using body.mobile-view rule instead */
 
 /* Date/time display spans all columns */
 .shop-container.home-page-container > .date-time-display {
