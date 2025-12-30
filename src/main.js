@@ -1304,6 +1304,80 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   }
 }
 
+// Show success modal (styled to match site aesthetic)
+function showSuccessModal(title, message, onClose) {
+  // Remove any existing modals first
+  const existingModal = document.querySelector('.success-modal-inline')
+  if (existingModal) {
+    existingModal.remove()
+  }
+  
+  // Create modal container
+  const modalContainer = document.createElement('div')
+  modalContainer.className = 'success-modal-inline'
+  
+  modalContainer.innerHTML = `
+    <div class="success-modal">
+      <div class="success-modal-title-bar">
+        <div class="mac-traffic-lights">
+          <div class="mac-traffic-light red" data-action="close"></div>
+          <div class="mac-traffic-light yellow" data-action="minimize"></div>
+          <div class="mac-traffic-light green" data-action="maximize"></div>
+        </div>
+        <h3 class="success-modal-title">${title}</h3>
+      </div>
+      <div class="success-modal-content">
+        <div class="success-icon">✔</div>
+        <p class="success-modal-message">${message}</p>
+        <div class="success-modal-buttons">
+          <button class="success-modal-btn primary">OK</button>
+        </div>
+      </div>
+    </div>
+  `
+  
+  // Insert modal into body
+  document.body.appendChild(modalContainer)
+  
+  // Close modal function
+  const closeModal = () => {
+    modalContainer.style.opacity = '0'
+    modalContainer.style.transition = 'opacity 0.2s ease'
+    setTimeout(() => {
+      modalContainer.remove()
+      if (onClose) onClose()
+    }, 200)
+  }
+  
+  // Close handlers
+  modalContainer.querySelector('.mac-traffic-light.red').addEventListener('click', closeModal)
+  modalContainer.querySelector('.mac-traffic-light.yellow').addEventListener('click', closeModal)
+  modalContainer.querySelector('.success-modal-btn').addEventListener('click', closeModal)
+  
+  // Green button (maximize) - shows clicked state
+  const greenButton = modalContainer.querySelector('.mac-traffic-light.green')
+  greenButton.addEventListener('click', function() {
+    this.classList.add('clicked')
+    setTimeout(() => {
+      this.classList.remove('clicked')
+    }, 200)
+  })
+  
+  // Close on ESC key
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      closeModal()
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }
+  document.addEventListener('keydown', handleEscape)
+  
+  // Animate in
+  requestAnimationFrame(() => {
+    modalContainer.style.opacity = '1'
+  })
+}
+
 // Show macOS-style notification modal
 function showNotifyModal(productName) {
   // Remove any existing modal first
@@ -1469,30 +1543,32 @@ function showNotifyModal(productName) {
       if (error) {
         // Handle duplicate email (unique constraint violation)
         if (error.code === '23505') {
-          alert('You\'re already on the list ✔')
-          closeModal()
+          showSuccessModal('Already on the list', 'You\'re already on the list! We\'ll notify you when it\'s back in stock.', closeModal)
         } else if (error.code === '42P01') {
           // Table doesn't exist
-          alert('Error: The waitlist table doesn\'t exist. Please create it in Supabase first.')
-          console.error('Supabase error:', error)
+          showSuccessModal('Error', 'The waitlist table doesn\'t exist. Please contact support.', () => {
+            console.error('Supabase error:', error)
+          })
         } else if (error.message && error.message.includes('JWT')) {
           // Invalid anon key
-          alert('Error: Invalid Supabase configuration. Please check your anon key in index.html')
-          console.error('Supabase error:', error)
+          showSuccessModal('Error', 'Invalid Supabase configuration. Please contact support.', () => {
+            console.error('Supabase error:', error)
+          })
         } else {
           // Other errors
-          alert(`Error: ${error.message || 'Something went wrong. Please try again.'}`)
-          console.error('Supabase error:', error)
+          showSuccessModal('Error', error.message || 'Something went wrong. Please try again.', () => {
+            console.error('Supabase error:', error)
+          })
         }
       } else {
         // Success message
         const phoneMessage = formattedPhone ? ` and ${formattedPhone}` : ''
-        alert(`You're on the list ✔\nWe'll notify you at ${email}${phoneMessage} when ${productName} is back in stock!`)
-        closeModal()
+        const successMessage = `We'll notify you at ${email}${phoneMessage} when ${productName} is back in stock!`
+        showSuccessModal('You\'re on the list!', successMessage, closeModal)
       }
     } catch (error) {
       console.error('Error submitting notification:', error)
-      alert(`Error: ${error.message || 'Something went wrong. Please check the browser console for details.'}`)
+      showSuccessModal('Error', error.message || 'Something went wrong. Please check the browser console for details.', () => {})
     } finally {
       // Restore button state
       if (submitButton) {
