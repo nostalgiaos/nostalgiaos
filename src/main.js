@@ -468,32 +468,34 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Immediately force nav bar to be fixed and ensure scroll is at top
+  // MOBILE: Wait for CSS to load on Vercel, then force nav bar to be fixed
   if (isMobileView) {
-    // Use multiple timeouts to ensure DOM is ready and nav bar is fixed
-    setTimeout(() => {
-      // Force nav bar to be fixed immediately via inline styles (before CSS applies)
+    // On Vercel, CSS might load after JS, so we need to wait and use !important
+    const applyNavBarStyles = () => {
       const navBar = document.querySelector('.top-nav-bar')
       if (navBar) {
-        navBar.style.position = 'fixed'
-        navBar.style.top = '5px' // Match the margin from CSS
-        navBar.style.left = '50%'
-        navBar.style.transform = 'translateX(-50%)'
-        navBar.style.width = 'calc(100% - 20px)'
-        navBar.style.height = '40px'
-        navBar.style.margin = '0 auto 20px auto' // Remove top margin since we're using top: 5px
-        navBar.style.zIndex = '10000'
+        // Use setProperty with 'important' to override any CSS that loads later
+        navBar.style.setProperty('position', 'fixed', 'important')
+        navBar.style.setProperty('top', '5px', 'important')
+        navBar.style.setProperty('left', '50%', 'important')
+        navBar.style.setProperty('transform', 'translateX(-50%)', 'important')
+        navBar.style.setProperty('width', 'calc(100% - 20px)', 'important')
+        navBar.style.setProperty('height', '40px', 'important')
+        navBar.style.setProperty('margin', '0 auto 20px auto', 'important')
+        navBar.style.setProperty('z-index', '10000', 'important')
         
         // Verify it's actually fixed
         const computedStyle = window.getComputedStyle(navBar)
         if (computedStyle.position !== 'fixed') {
-          // Force it again if not fixed
-          navBar.style.setProperty('position', 'fixed', 'important')
-          navBar.style.setProperty('top', '0', 'important')
+          // If still not fixed, the CSS might be overriding - try again
+          setTimeout(() => {
+            navBar.style.setProperty('position', 'fixed', 'important')
+            navBar.style.setProperty('top', '5px', 'important')
+          }, 10)
         }
       }
       
-      // Force scroll to top immediately after rendering
+      // Force scroll to top
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
       window.scrollTo(0, 0)
       if (document.documentElement) {
@@ -502,21 +504,19 @@ function showMainContent() {
       if (document.body) {
         document.body.scrollTop = 0
       }
-    }, 0)
+    }
     
-    // Also check again after a short delay
-    setTimeout(() => {
-      const navBar = document.querySelector('.top-nav-bar')
-      if (navBar) {
-        const computedStyle = window.getComputedStyle(navBar)
-        if (computedStyle.position !== 'fixed') {
-          navBar.style.setProperty('position', 'fixed', 'important')
-          navBar.style.setProperty('top', '0', 'important')
-        }
-        // Force scroll again
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-      }
-    }, 50)
+    // Apply immediately
+    applyNavBarStyles()
+    
+    // Also apply after multiple delays to catch CSS loading at different times (Vercel timing issue)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(applyNavBarStyles)
+    })
+    setTimeout(applyNavBarStyles, 0)
+    setTimeout(applyNavBarStyles, 50)
+    setTimeout(applyNavBarStyles, 100)
+    setTimeout(applyNavBarStyles, 200)
   }
   
   // MOBILE: Ensure scroll is at top before unlocking overflow
