@@ -470,7 +470,7 @@ function showMainContent() {
   
   // MOBILE: Immediately force nav bar to be fixed and ensure scroll is at top
   if (isMobileView) {
-    // Use setTimeout(0) to ensure DOM is ready
+    // Use multiple timeouts to ensure DOM is ready and nav bar is fixed
     setTimeout(() => {
       // Force nav bar to be fixed immediately via inline styles (before CSS applies)
       const navBar = document.querySelector('.top-nav-bar')
@@ -483,6 +483,14 @@ function showMainContent() {
         navBar.style.height = '40px'
         navBar.style.margin = '5px auto 20px auto'
         navBar.style.zIndex = '10000'
+        
+        // Verify it's actually fixed
+        const computedStyle = window.getComputedStyle(navBar)
+        if (computedStyle.position !== 'fixed') {
+          // Force it again if not fixed
+          navBar.style.setProperty('position', 'fixed', 'important')
+          navBar.style.setProperty('top', '0', 'important')
+        }
       }
       
       // Force scroll to top immediately after rendering
@@ -495,6 +503,20 @@ function showMainContent() {
         document.body.scrollTop = 0
       }
     }, 0)
+    
+    // Also check again after a short delay
+    setTimeout(() => {
+      const navBar = document.querySelector('.top-nav-bar')
+      if (navBar) {
+        const computedStyle = window.getComputedStyle(navBar)
+        if (computedStyle.position !== 'fixed') {
+          navBar.style.setProperty('position', 'fixed', 'important')
+          navBar.style.setProperty('top', '0', 'important')
+        }
+        // Force scroll again
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      }
+    }, 50)
   }
   
   // MOBILE: Ensure scroll is at top before unlocking overflow
