@@ -645,6 +645,8 @@ function showMainContent() {
     window.addEventListener('focus', scrollToTop)
   }
   
+  } // Close proceedWithScrollLock function
+  
   // Listen for resize to scroll to top when switching to mobile
   let lastWidth = window.innerWidth
   let resizeTimeout
