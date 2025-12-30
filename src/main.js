@@ -381,7 +381,7 @@ function showMainContent() {
   
   document.querySelector('#app').innerHTML = `
     <div class="monitor-wrapper">
-      <div class="shop-container home-page-container" ${isMobileView ? 'style="padding-top: 0 !important; margin-top: 0 !important;"' : ''}>
+      <div class="shop-container home-page-container">
         <!-- Top Navigation Bar -->
         <nav class="top-nav-bar">
           <div class="nav-btn nav-btn-left active">Home</div>
