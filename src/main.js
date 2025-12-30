@@ -380,10 +380,10 @@ function showMainContent() {
   }
   
   document.querySelector('#app').innerHTML = `
-    <div class="monitor-wrapper">
+    <div class="monitor-wrapper" style="opacity: 0;">
       <div class="shop-container home-page-container">
         <!-- Top Navigation Bar -->
-        <nav class="top-nav-bar">
+        <nav class="top-nav-bar" style="position: fixed !important; top: 5px !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100% - 20px) !important; height: 40px !important; margin: 0 auto 20px auto !important; z-index: 10000 !important;">
           <div class="nav-btn nav-btn-left active">Home</div>
           <div class="nav-btn nav-btn-left">softwear</div>
           <div class="nav-btn nav-btn-left">hardwear</div>
