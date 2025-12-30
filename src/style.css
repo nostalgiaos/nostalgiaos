@@ -3831,9 +3831,8 @@ a {
   }
   
   .shop-container.home-page-container > .top-nav-bar {
-    margin-bottom: 10px;
-    margin-top: 0;
-    top: 5px;
+    margin-bottom: 10px !important;
+    /* Position already set by body.mobile-view rule - don't override top */
   }
   
   .product-showcase-image {
