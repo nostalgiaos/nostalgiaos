@@ -468,7 +468,7 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Ensure everything is locked before showing content
+  // MOBILE: Ensure scroll is locked, then show content (let CSS handle nav bar styling)
   if (isMobileView) {
     const showContent = () => {
       // Force scroll to top one more time
@@ -481,25 +481,7 @@ function showMainContent() {
         document.body.scrollTop = 0
       }
       
-      // Verify nav bar is fixed and matches CSS exactly
-      const navBar = document.querySelector('.top-nav-bar')
-      if (navBar) {
-        const computedStyle = window.getComputedStyle(navBar)
-        // CSS should have: position: fixed, top: 0, margin: 5px auto 20px auto
-        if (computedStyle.position !== 'fixed') {
-          // Only override if CSS hasn't loaded - match the CSS exactly
-          navBar.style.setProperty('position', 'fixed', 'important')
-          navBar.style.setProperty('top', '0', 'important')
-          navBar.style.setProperty('left', '50%', 'important')
-          navBar.style.setProperty('transform', 'translateX(-50%)', 'important')
-          navBar.style.setProperty('width', 'calc(100% - 20px)', 'important')
-          navBar.style.setProperty('height', '40px', 'important')
-          navBar.style.setProperty('margin', '5px auto 20px auto', 'important')
-          navBar.style.setProperty('z-index', '10000', 'important')
-        }
-      }
-      
-      // Now show the content
+      // Show the content - CSS will handle nav bar styling
       const wrapper = document.querySelector('.monitor-wrapper')
       if (wrapper) {
         wrapper.style.opacity = '1'
@@ -507,16 +489,11 @@ function showMainContent() {
       }
     }
     
-    // Wait for CSS to potentially load, then show content
-    // Use multiple attempts to catch different loading scenarios
+    // Wait a moment for CSS to load, then show content
     requestAnimationFrame(() => {
       requestAnimationFrame(showContent)
     })
-    setTimeout(showContent, 50)
     setTimeout(showContent, 100)
-    setTimeout(showContent, 200)
-    // Final fallback
-    setTimeout(showContent, 500)
   } else {
     // Desktop: show immediately
     const wrapper = document.querySelector('.monitor-wrapper')
