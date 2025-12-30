@@ -380,7 +380,7 @@ function showMainContent() {
   }
   
   document.querySelector('#app').innerHTML = `
-    <div class="monitor-wrapper" style="opacity: 0;">
+    <div class="monitor-wrapper">
       <div class="shop-container home-page-container">
         <!-- Top Navigation Bar -->
         <nav class="top-nav-bar">
@@ -468,39 +468,6 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Ensure scroll is locked, then show content (let CSS handle nav bar styling)
-  if (isMobileView) {
-    const showContent = () => {
-      // Force scroll to top one more time
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-      window.scrollTo(0, 0)
-      if (document.documentElement) {
-        document.documentElement.scrollTop = 0
-      }
-      if (document.body) {
-        document.body.scrollTop = 0
-      }
-      
-      // Show the content - CSS will handle nav bar styling
-      const wrapper = document.querySelector('.monitor-wrapper')
-      if (wrapper) {
-        wrapper.style.opacity = '1'
-        wrapper.style.transition = 'opacity 0.1s'
-      }
-    }
-    
-    // Wait a moment for CSS to load, then show content
-    requestAnimationFrame(() => {
-      requestAnimationFrame(showContent)
-    })
-    setTimeout(showContent, 100)
-  } else {
-    // Desktop: show immediately
-    const wrapper = document.querySelector('.monitor-wrapper')
-    if (wrapper) {
-      wrapper.style.opacity = '1'
-    }
-  }
   
   // MOBILE: Ensure scroll is at top before unlocking overflow
   if (isMobileView) {
