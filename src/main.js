@@ -351,6 +351,37 @@ function showMainContent() {
   // Check if mobile
   const isMobileView = window.innerWidth <= 768
   
+  // Helper to wait for CSS to load (Vercel-specific issue)
+  // On Vercel, CSS might load after JS, causing nav bar to not be positioned correctly initially
+  const waitForCSS = (callback, maxWait = 500) => {
+    const startTime = Date.now()
+    const checkCSS = () => {
+      // After HTML is rendered, check if nav bar CSS is applied
+      const navBar = document.querySelector('.top-nav-bar')
+      if (navBar) {
+        const computed = window.getComputedStyle(navBar)
+        // Check if the mobile-view CSS is applied (position should be fixed on mobile)
+        if (isMobileView && computed.position === 'fixed') {
+          callback()
+          return
+        }
+      }
+      
+      // If timeout reached, proceed anyway
+      if ((Date.now() - startTime) > maxWait) {
+        callback()
+        return
+      }
+      
+      // Check again
+      requestAnimationFrame(checkCSS)
+    }
+    // Start checking after HTML is rendered
+    requestAnimationFrame(() => {
+      requestAnimationFrame(checkCSS)
+    })
+  }
+  
   // Add mobile class to body for CSS targeting
   if (isMobileView) {
     document.body.classList.add('mobile-view')
@@ -468,9 +499,18 @@ function showMainContent() {
     </div>
   `
   
-  
-  // MOBILE: Ensure scroll is at top before unlocking overflow
+  // MOBILE: Wait for CSS to load on Vercel, then proceed with scroll locking
   if (isMobileView) {
+    waitForCSS(() => {
+      proceedWithScrollLock()
+    })
+  } else {
+    proceedWithScrollLock()
+  }
+  
+  function proceedWithScrollLock() {
+    // MOBILE: Ensure scroll is at top before unlocking overflow
+    if (isMobileView) {
     // Wait for content to render, then ensure scroll is at top
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -565,6 +605,7 @@ function showMainContent() {
   }
   
   // AGGRESSIVE scroll to top for mobile - run multiple times to ensure it sticks
+  if (isMobileView) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     window.scrollTo(0, 0)
