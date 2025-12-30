@@ -383,7 +383,7 @@ function showMainContent() {
     <div class="monitor-wrapper" style="opacity: 0;">
       <div class="shop-container home-page-container">
         <!-- Top Navigation Bar -->
-        <nav class="top-nav-bar" style="position: fixed !important; top: 5px !important; left: 50% !important; transform: translateX(-50%) !important; width: calc(100% - 20px) !important; height: 40px !important; margin: 0 auto 20px auto !important; z-index: 10000 !important;">
+        <nav class="top-nav-bar">
           <div class="nav-btn nav-btn-left active">Home</div>
           <div class="nav-btn nav-btn-left">softwear</div>
           <div class="nav-btn nav-btn-left">hardwear</div>
@@ -481,19 +481,20 @@ function showMainContent() {
         document.body.scrollTop = 0
       }
       
-      // Verify nav bar is fixed
+      // Verify nav bar is fixed and matches CSS exactly
       const navBar = document.querySelector('.top-nav-bar')
       if (navBar) {
         const computedStyle = window.getComputedStyle(navBar)
+        // CSS should have: position: fixed, top: 0, margin: 5px auto 20px auto
         if (computedStyle.position !== 'fixed') {
-          // Force it to be fixed
+          // Only override if CSS hasn't loaded - match the CSS exactly
           navBar.style.setProperty('position', 'fixed', 'important')
-          navBar.style.setProperty('top', '5px', 'important')
+          navBar.style.setProperty('top', '0', 'important')
           navBar.style.setProperty('left', '50%', 'important')
           navBar.style.setProperty('transform', 'translateX(-50%)', 'important')
           navBar.style.setProperty('width', 'calc(100% - 20px)', 'important')
           navBar.style.setProperty('height', '40px', 'important')
-          navBar.style.setProperty('margin', '0 auto 20px auto', 'important')
+          navBar.style.setProperty('margin', '5px auto 20px auto', 'important')
           navBar.style.setProperty('z-index', '10000', 'important')
         }
       }
