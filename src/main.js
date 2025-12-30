@@ -605,7 +605,6 @@ function showMainContent() {
   }
   
   // AGGRESSIVE scroll to top for mobile - run multiple times to ensure it sticks
-  if (isMobileView) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     window.scrollTo(0, 0)
