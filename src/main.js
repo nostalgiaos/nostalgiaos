@@ -705,13 +705,32 @@ function showMainContent() {
   }
 
   // Homepage notify link handler
-  const homepageNotifyLink = document.getElementById('homepage-notify-link')
-  if (homepageNotifyLink) {
-    homepageNotifyLink.addEventListener('click', function(e) {
-      e.preventDefault()
-      showNotifyModal('new items')
-    })
+  const attachHomepageNotifyHandler = () => {
+    const homepageNotifyLink = document.getElementById('homepage-notify-link')
+    if (homepageNotifyLink) {
+      // Clone to remove existing listeners
+      const newLink = homepageNotifyLink.cloneNode(true)
+      homepageNotifyLink.parentNode.replaceChild(newLink, homepageNotifyLink)
+      
+      newLink.addEventListener('click', function(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('Homepage notify link clicked')
+        if (typeof showNotifyModal === 'function') {
+          showNotifyModal('new items')
+        } else {
+          console.error('showNotifyModal is not a function')
+        }
+      })
+      console.log('Homepage notify link handler attached')
+    } else {
+      console.error('Homepage notify link not found')
+    }
   }
+  
+  attachHomepageNotifyHandler()
+  setTimeout(attachHomepageNotifyHandler, 50)
+  setTimeout(attachHomepageNotifyHandler, 200)
 
   // Make homepage product items clickable to go to product detail page
   document.querySelectorAll('.product-clickable').forEach(item => {
@@ -1295,24 +1314,37 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler - use setTimeout to ensure DOM is ready
-  setTimeout(() => {
+  // Notify Me button handler - use multiple approaches to ensure it works
+  const attachNotifyHandler = () => {
     const notifyBtn = document.querySelector('.notify-me-btn')
     if (notifyBtn) {
-      // Remove any existing listeners first
+      // Remove any existing listeners by cloning
       const newNotifyBtn = notifyBtn.cloneNode(true)
       notifyBtn.parentNode.replaceChild(newNotifyBtn, notifyBtn)
       
-      // Add click handler
+      // Add click handler with explicit function reference
       newNotifyBtn.addEventListener('click', function(e) {
         e.preventDefault()
         e.stopPropagation()
-        showNotifyModal(productName)
+        console.log('Notify Me button clicked, productName:', productName)
+        if (typeof showNotifyModal === 'function') {
+          showNotifyModal(productName)
+        } else {
+          console.error('showNotifyModal is not a function')
+        }
       })
+      console.log('Notify Me button handler attached')
     } else {
       console.error('Notify Me button not found')
     }
-  }, 0)
+  }
+  
+  // Try immediately
+  attachNotifyHandler()
+  
+  // Also try after a delay
+  setTimeout(attachNotifyHandler, 50)
+  setTimeout(attachNotifyHandler, 200)
 }
 
 // Show success modal (styled to match site aesthetic)
