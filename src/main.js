@@ -2,20 +2,29 @@ import './style.css'
 import { createSpinningModel } from './threeModelLoader.js'
 
 // Make showNotifyModal globally accessible for onclick handlers (define early)
+// This will be updated once showNotifyModal is defined
 window.showNotifyModalForProduct = function(productName) {
-  // This will be called from onclick handlers in HTML
-  // showNotifyModal function will be defined later in the file
+  console.log('showNotifyModalForProduct called with:', productName)
+  // Try to call showNotifyModal directly (it should be in scope)
   if (typeof showNotifyModal === 'function') {
+    console.log('Calling showNotifyModal directly')
     showNotifyModal(productName)
   } else {
-    // Wait for function to be defined
-    setTimeout(() => {
+    // Wait a bit longer for function to be defined
+    console.log('showNotifyModal not found, waiting...')
+    let attempts = 0
+    const checkAndCall = () => {
+      attempts++
       if (typeof showNotifyModal === 'function') {
+        console.log('Found showNotifyModal, calling it')
         showNotifyModal(productName)
+      } else if (attempts < 10) {
+        setTimeout(checkAndCall, 50)
       } else {
-        console.error('showNotifyModal function not found')
+        console.error('showNotifyModal function not found after waiting')
       }
-    }, 100)
+    }
+    setTimeout(checkAndCall, 50)
   }
 }
 
