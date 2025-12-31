@@ -1049,6 +1049,25 @@ function showSoftwearPage() {
   }
 }
 
+// Make showNotifyModal globally accessible (define before it's used in HTML)
+if (typeof window.showNotifyModalForProduct === 'undefined') {
+  window.showNotifyModalForProduct = function(productName) {
+    // showNotifyModal will be defined later, but we'll call it when needed
+    if (typeof showNotifyModal === 'function') {
+      showNotifyModal(productName)
+    } else {
+      // Fallback: wait for function to be defined
+      setTimeout(() => {
+        if (typeof showNotifyModal === 'function') {
+          showNotifyModal(productName)
+        } else {
+          console.error('showNotifyModal function not found')
+        }
+      }, 100)
+    }
+  }
+}
+
 // Product Detail Page
 function showProductDetailPage(productId, productName, productImage, price, activeSection = 'softwear') {
   // Reset viewport zoom on mobile (prevents zoom persistence)
