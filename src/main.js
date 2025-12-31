@@ -1332,33 +1332,33 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler - backup to onclick (which should work, but this ensures it)
-  const attachNotifyHandler = () => {
+  // Notify Me button handler - onclick should work, but add event listener as backup
+  // Don't clone the button as that removes the onclick handler
+  setTimeout(() => {
     const notifyBtn = document.querySelector('.notify-me-btn')
     if (notifyBtn) {
       // Add click handler as backup (onclick should work, but this ensures it)
+      // Don't clone - just add listener directly so onclick is preserved
       notifyBtn.addEventListener('click', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log('Notify Me button clicked (event listener), productName:', productName)
-        if (typeof showNotifyModal === 'function') {
-          showNotifyModal(productName)
-        } else if (typeof window.showNotifyModalForProduct === 'function') {
-          window.showNotifyModalForProduct(productName)
-        } else {
-          console.error('Neither showNotifyModal nor showNotifyModalForProduct is a function')
+        // Only handle if onclick didn't work (prevent double-firing)
+        if (!e.defaultPrevented) {
+          e.preventDefault()
+          e.stopPropagation()
+          console.log('Notify Me button clicked (event listener backup), productName:', productName)
+          if (typeof showNotifyModal === 'function') {
+            showNotifyModal(productName)
+          } else if (typeof window.showNotifyModalForProduct === 'function') {
+            window.showNotifyModalForProduct(productName)
+          } else {
+            console.error('Neither showNotifyModal nor showNotifyModalForProduct is a function')
+          }
         }
       })
-      console.log('Notify Me button handler attached (backup)')
+      console.log('Notify Me button handler attached (backup to onclick)')
     } else {
       console.error('Notify Me button not found')
     }
-  }
-  
-  // Try immediately and after delays
-  attachNotifyHandler()
-  setTimeout(attachNotifyHandler, 50)
-  setTimeout(attachNotifyHandler, 200)
+  }, 0)
 }
 
 // Show success modal (styled to match site aesthetic)
