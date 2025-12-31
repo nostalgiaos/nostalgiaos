@@ -1223,7 +1223,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                   </div>
                   
                   <!-- Notify Me Button -->
-                  <button class="notify-me-btn" onclick="window.showNotifyModalForProduct('${productName}')">Notify Me</button>
+                  <button class="notify-me-btn" onclick="window.showNotifyModalForProduct('${productName.replace(/'/g, "\\'")}')">Notify Me</button>
                 </div>
               </div>
             </div>
