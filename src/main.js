@@ -1332,35 +1332,31 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler - use multiple approaches to ensure it works
+  // Notify Me button handler - backup to onclick (which should work, but this ensures it)
   const attachNotifyHandler = () => {
     const notifyBtn = document.querySelector('.notify-me-btn')
     if (notifyBtn) {
-      // Remove any existing listeners by cloning
-      const newNotifyBtn = notifyBtn.cloneNode(true)
-      notifyBtn.parentNode.replaceChild(newNotifyBtn, notifyBtn)
-      
-      // Add click handler with explicit function reference
-      newNotifyBtn.addEventListener('click', function(e) {
+      // Add click handler as backup (onclick should work, but this ensures it)
+      notifyBtn.addEventListener('click', function(e) {
         e.preventDefault()
         e.stopPropagation()
-        console.log('Notify Me button clicked, productName:', productName)
+        console.log('Notify Me button clicked (event listener), productName:', productName)
         if (typeof showNotifyModal === 'function') {
           showNotifyModal(productName)
+        } else if (typeof window.showNotifyModalForProduct === 'function') {
+          window.showNotifyModalForProduct(productName)
         } else {
-          console.error('showNotifyModal is not a function')
+          console.error('Neither showNotifyModal nor showNotifyModalForProduct is a function')
         }
       })
-      console.log('Notify Me button handler attached')
+      console.log('Notify Me button handler attached (backup)')
     } else {
       console.error('Notify Me button not found')
     }
   }
   
-  // Try immediately
+  // Try immediately and after delays
   attachNotifyHandler()
-  
-  // Also try after a delay
   setTimeout(attachNotifyHandler, 50)
   setTimeout(attachNotifyHandler, 200)
 }
