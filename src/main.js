@@ -1445,6 +1445,13 @@ function showSuccessModal(title, message, onClose) {
 
 // Show macOS-style notification modal
 function showNotifyModal(productName) {
+  console.log('showNotifyModal called with:', productName)
+  
+  // Update global function to directly call this function (for faster access)
+  window.showNotifyModalForProduct = function(pn) {
+    showNotifyModal(pn)
+  }
+  
   // Remove any existing modal first
   const existingModal = document.querySelector('.mac-modal-inline')
   if (existingModal) {
