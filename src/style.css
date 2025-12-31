@@ -2682,6 +2682,7 @@ a {
 }
 
 .spec-value {
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-weight: 300;
   color: #000000;
 }
