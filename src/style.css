@@ -2682,7 +2682,6 @@ a {
 }
 
 .spec-value {
-  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-weight: 300;
   color: #000000;
 }
@@ -3430,14 +3429,174 @@ a {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, transparent 100%);
 }
 
-/* Success Modal - Uses same styling as mac-modal for consistency */
-.mac-modal-inline {
+/* Success Modal - Styled to match site aesthetic */
+.success-modal-inline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10001;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
-.mac-modal-inline[style*="opacity: 1"] {
-  opacity: 1;
+.success-modal-inline .success-modal {
+  pointer-events: auto;
+  position: relative;
+}
+
+.success-modal {
+  background: #FFFFFF;
+  border: 1px solid #B8B8B8;
+  border-radius: 8px;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+  min-width: 420px;
+  max-width: 480px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.success-modal-title-bar {
+  background: linear-gradient(180deg, #E8E8E8 0%, #D0D0D0 100%);
+  border-bottom: 1px solid #B8B8B8;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.success-modal-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+  line-height: 14px;
+  pointer-events: none;
+}
+
+.success-modal-content {
+  padding: 28px 32px 24px;
+  background: #FFFFFF;
+  color: #000000;
+  text-align: center;
+}
+
+.success-icon-wrapper {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #34C759 0%, #28A745 100%);
+  color: #FFFFFF;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
+  line-height: 1;
+}
+
+.success-modal-message {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: #333333;
+  text-align: center;
+  white-space: pre-line;
+  font-weight: 400;
+}
+
+.success-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.success-modal-btn {
+  padding: 10px 32px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+  letter-spacing: -0.01em;
+}
+
+.success-modal-btn.primary {
+  background: #007AFF;
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+}
+
+.success-modal-btn.primary:hover {
+  background: #0051D5;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.success-modal-btn.primary:active {
+  background: #0040B3;
+  box-shadow: 0 1px 4px rgba(0, 122, 255, 0.3);
+  transform: translateY(0);
+}
+
+/* Mobile styles for success modal */
+@media (max-width: 768px) {
+  .success-modal {
+    min-width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+    margin: 20px;
+  }
+  
+  .success-modal-content {
+    padding: 24px 20px 20px;
+  }
+  
+  .success-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+  }
+  
+  .success-icon-wrapper {
+    margin-bottom: 16px;
+  }
+  
+  .success-modal-message {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  
+  .success-modal-btn {
+    padding: 10px 28px;
+    font-size: 13px;
+  }
 }
 
 /* ============================================

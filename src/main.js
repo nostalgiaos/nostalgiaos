@@ -1,33 +1,6 @@
 import './style.css'
 import { createSpinningModel } from './threeModelLoader.js'
 
-// Make showNotifyModal globally accessible for onclick handlers (define early)
-// This will be updated once showNotifyModal is defined
-window.showNotifyModalForProduct = function(productName) {
-  console.log('showNotifyModalForProduct called with:', productName)
-  // Try to call showNotifyModal directly (it should be in scope)
-  if (typeof showNotifyModal === 'function') {
-    console.log('Calling showNotifyModal directly')
-    showNotifyModal(productName)
-  } else {
-    // Wait a bit longer for function to be defined
-    console.log('showNotifyModal not found, waiting...')
-    let attempts = 0
-    const checkAndCall = () => {
-      attempts++
-      if (typeof showNotifyModal === 'function') {
-        console.log('Found showNotifyModal, calling it')
-        showNotifyModal(productName)
-      } else if (attempts < 10) {
-        setTimeout(checkAndCall, 50)
-      } else {
-        console.error('showNotifyModal function not found after waiting')
-      }
-    }
-    setTimeout(checkAndCall, 50)
-  }
-}
-
 // Helper function to reset viewport zoom on mobile (prevents zoom persistence across page navigations)
 function resetViewportZoom() {
   if (window.innerWidth > 768) return // Only on mobile
@@ -736,17 +709,8 @@ function showMainContent() {
   if (homepageNotifyLink) {
     homepageNotifyLink.addEventListener('click', function(e) {
       e.preventDefault()
-      e.stopPropagation()
-      console.log('Homepage notify link clicked')
-      if (typeof showNotifyModal === 'function') {
-        showNotifyModal('new items')
-      } else {
-        console.error('showNotifyModal is not a function')
-      }
+      showNotifyModal('new items')
     })
-    console.log('Homepage notify link handler attached')
-  } else {
-    console.error('Homepage notify link not found')
   }
 
   // Make homepage product items clickable to go to product detail page
@@ -1331,62 +1295,44 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler - use event listener
-  const attachNotifyHandler = () => {
-    const notifyBtn = document.querySelector('.notify-me-btn')
-    if (notifyBtn && !notifyBtn.hasAttribute('data-listener-attached')) {
-      notifyBtn.setAttribute('data-listener-attached', 'true')
-      notifyBtn.addEventListener('click', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log('Notify Me button clicked, productName:', productName)
-        if (typeof showNotifyModal === 'function') {
-          showNotifyModal(productName)
-        } else {
-          console.error('showNotifyModal is not a function')
-        }
-      })
-      console.log('Notify Me button handler attached')
-      return true
-    }
-    return false
-  }
-  
-  // Try immediately and after delays
-  if (!attachNotifyHandler()) {
-    setTimeout(() => attachNotifyHandler(), 0)
-    setTimeout(() => attachNotifyHandler(), 50)
-    setTimeout(() => attachNotifyHandler(), 100)
-    setTimeout(() => attachNotifyHandler(), 200)
+  // Notify Me button handler
+  const notifyBtn = document.querySelector('.notify-me-btn')
+  if (notifyBtn) {
+    notifyBtn.addEventListener('click', function() {
+      showNotifyModal(productName)
+    })
   }
 }
 
 // Show success modal (styled to match site aesthetic)
 function showSuccessModal(title, message, onClose) {
   // Remove any existing modals first
-  const existingModal = document.querySelector('.mac-modal-inline')
+  const existingModal = document.querySelector('.success-modal-inline')
   if (existingModal) {
     existingModal.remove()
   }
   
   // Create modal container
   const modalContainer = document.createElement('div')
-  modalContainer.className = 'mac-modal-inline'
+  modalContainer.className = 'success-modal-inline'
   
   modalContainer.innerHTML = `
-    <div class="success-modal mac-modal">
-      <div class="mac-modal-title-bar">
+    <div class="success-modal">
+      <div class="success-modal-title-bar">
         <div class="mac-traffic-lights">
           <div class="mac-traffic-light red" data-action="close"></div>
           <div class="mac-traffic-light yellow" data-action="minimize"></div>
           <div class="mac-traffic-light green" data-action="maximize"></div>
         </div>
-        <h3 class="mac-modal-title">${title}</h3>
+        <h3 class="success-modal-title">${title}</h3>
       </div>
-      <div class="mac-modal-content">
-        <p class="mac-modal-message">${message}</p>
-        <div class="mac-modal-buttons">
-          <button class="mac-modal-btn primary">OK</button>
+      <div class="success-modal-content">
+        <div class="success-icon-wrapper">
+          <div class="success-icon">✓</div>
+        </div>
+        <p class="success-modal-message">${message}</p>
+        <div class="success-modal-buttons">
+          <button class="success-modal-btn primary">OK</button>
         </div>
       </div>
     </div>
@@ -1408,7 +1354,7 @@ function showSuccessModal(title, message, onClose) {
   // Close handlers
   modalContainer.querySelector('.mac-traffic-light.red').addEventListener('click', closeModal)
   modalContainer.querySelector('.mac-traffic-light.yellow').addEventListener('click', closeModal)
-  modalContainer.querySelector('.mac-modal-btn').addEventListener('click', closeModal)
+  modalContainer.querySelector('.success-modal-btn').addEventListener('click', closeModal)
   
   // Green button (maximize) - shows clicked state
   const greenButton = modalContainer.querySelector('.mac-traffic-light.green')
@@ -1436,13 +1382,6 @@ function showSuccessModal(title, message, onClose) {
 
 // Show macOS-style notification modal
 function showNotifyModal(productName) {
-  console.log('showNotifyModal called with:', productName)
-  
-  // Update global function to directly call this function (for faster access)
-  window.showNotifyModalForProduct = function(pn) {
-    showNotifyModal(pn)
-  }
-  
   // Remove any existing modal first
   const existingModal = document.querySelector('.mac-modal-inline')
   if (existingModal) {
