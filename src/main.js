@@ -1,6 +1,24 @@
 import './style.css'
 import { createSpinningModel } from './threeModelLoader.js'
 
+// Make showNotifyModal globally accessible for onclick handlers (define early)
+window.showNotifyModalForProduct = function(productName) {
+  // This will be called from onclick handlers in HTML
+  // showNotifyModal function will be defined later in the file
+  if (typeof showNotifyModal === 'function') {
+    showNotifyModal(productName)
+  } else {
+    // Wait for function to be defined
+    setTimeout(() => {
+      if (typeof showNotifyModal === 'function') {
+        showNotifyModal(productName)
+      } else {
+        console.error('showNotifyModal function not found')
+      }
+    }, 100)
+  }
+}
+
 // Helper function to reset viewport zoom on mobile (prevents zoom persistence across page navigations)
 function resetViewportZoom() {
   if (window.innerWidth > 768) return // Only on mobile
@@ -1046,25 +1064,6 @@ function showSoftwearPage() {
     setTimeout(() => {
       convertAllSVGImagesToInline()
     }, 500)
-  }
-}
-
-// Make showNotifyModal globally accessible (define before it's used in HTML)
-if (typeof window.showNotifyModalForProduct === 'undefined') {
-  window.showNotifyModalForProduct = function(productName) {
-    // showNotifyModal will be defined later, but we'll call it when needed
-    if (typeof showNotifyModal === 'function') {
-      showNotifyModal(productName)
-    } else {
-      // Fallback: wait for function to be defined
-      setTimeout(() => {
-        if (typeof showNotifyModal === 'function') {
-          showNotifyModal(productName)
-        } else {
-          console.error('showNotifyModal function not found')
-        }
-      }, 100)
-    }
   }
 }
 
