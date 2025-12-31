@@ -1307,30 +1307,29 @@ function showProductDetailPage(productId, productName, productImage, price, acti
 // Show success modal (styled to match site aesthetic)
 function showSuccessModal(title, message, onClose) {
   // Remove any existing modals first
-  const existingModal = document.querySelector('.success-modal-inline')
+  const existingModal = document.querySelector('.mac-modal-inline')
   if (existingModal) {
     existingModal.remove()
   }
   
   // Create modal container
   const modalContainer = document.createElement('div')
-  modalContainer.className = 'success-modal-inline'
+  modalContainer.className = 'mac-modal-inline'
   
   modalContainer.innerHTML = `
-    <div class="success-modal">
-      <div class="success-modal-title-bar">
+    <div class="success-modal mac-modal">
+      <div class="mac-modal-title-bar">
         <div class="mac-traffic-lights">
           <div class="mac-traffic-light red" data-action="close"></div>
           <div class="mac-traffic-light yellow" data-action="minimize"></div>
           <div class="mac-traffic-light green" data-action="maximize"></div>
         </div>
-        <h3 class="success-modal-title">${title}</h3>
+        <h3 class="mac-modal-title">${title}</h3>
       </div>
-      <div class="success-modal-content">
-        <div class="success-icon">✔</div>
-        <p class="success-modal-message">${message}</p>
-        <div class="success-modal-buttons">
-          <button class="success-modal-btn primary">OK</button>
+      <div class="mac-modal-content">
+        <p class="mac-modal-message">${message}</p>
+        <div class="mac-modal-buttons">
+          <button class="mac-modal-btn primary">OK</button>
         </div>
       </div>
     </div>
@@ -1352,7 +1351,7 @@ function showSuccessModal(title, message, onClose) {
   // Close handlers
   modalContainer.querySelector('.mac-traffic-light.red').addEventListener('click', closeModal)
   modalContainer.querySelector('.mac-traffic-light.yellow').addEventListener('click', closeModal)
-  modalContainer.querySelector('.success-modal-btn').addEventListener('click', closeModal)
+  modalContainer.querySelector('.mac-modal-btn').addEventListener('click', closeModal)
   
   // Green button (maximize) - shows clicked state
   const greenButton = modalContainer.querySelector('.mac-traffic-light.green')
