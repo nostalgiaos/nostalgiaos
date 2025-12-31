@@ -732,32 +732,22 @@ function showMainContent() {
   }
 
   // Homepage notify link handler
-  const attachHomepageNotifyHandler = () => {
-    const homepageNotifyLink = document.getElementById('homepage-notify-link')
-    if (homepageNotifyLink) {
-      // Clone to remove existing listeners
-      const newLink = homepageNotifyLink.cloneNode(true)
-      homepageNotifyLink.parentNode.replaceChild(newLink, homepageNotifyLink)
-      
-      newLink.addEventListener('click', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
-        console.log('Homepage notify link clicked')
-        if (typeof showNotifyModal === 'function') {
-          showNotifyModal('new items')
-        } else {
-          console.error('showNotifyModal is not a function')
-        }
-      })
-      console.log('Homepage notify link handler attached')
-    } else {
-      console.error('Homepage notify link not found')
-    }
+  const homepageNotifyLink = document.getElementById('homepage-notify-link')
+  if (homepageNotifyLink) {
+    homepageNotifyLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      e.stopPropagation()
+      console.log('Homepage notify link clicked')
+      if (typeof showNotifyModal === 'function') {
+        showNotifyModal('new items')
+      } else {
+        console.error('showNotifyModal is not a function')
+      }
+    })
+    console.log('Homepage notify link handler attached')
+  } else {
+    console.error('Homepage notify link not found')
   }
-  
-  attachHomepageNotifyHandler()
-  setTimeout(attachHomepageNotifyHandler, 50)
-  setTimeout(attachHomepageNotifyHandler, 200)
 
   // Make homepage product items clickable to go to product detail page
   document.querySelectorAll('.product-clickable').forEach(item => {
@@ -1341,33 +1331,34 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler - onclick should work, but add event listener as backup
-  // Don't clone the button as that removes the onclick handler
-  setTimeout(() => {
+  // Notify Me button handler - use event listener
+  const attachNotifyHandler = () => {
     const notifyBtn = document.querySelector('.notify-me-btn')
-    if (notifyBtn) {
-      // Add click handler as backup (onclick should work, but this ensures it)
-      // Don't clone - just add listener directly so onclick is preserved
+    if (notifyBtn && !notifyBtn.hasAttribute('data-listener-attached')) {
+      notifyBtn.setAttribute('data-listener-attached', 'true')
       notifyBtn.addEventListener('click', function(e) {
-        // Only handle if onclick didn't work (prevent double-firing)
-        if (!e.defaultPrevented) {
-          e.preventDefault()
-          e.stopPropagation()
-          console.log('Notify Me button clicked (event listener backup), productName:', productName)
-          if (typeof showNotifyModal === 'function') {
-            showNotifyModal(productName)
-          } else if (typeof window.showNotifyModalForProduct === 'function') {
-            window.showNotifyModalForProduct(productName)
-          } else {
-            console.error('Neither showNotifyModal nor showNotifyModalForProduct is a function')
-          }
+        e.preventDefault()
+        e.stopPropagation()
+        console.log('Notify Me button clicked, productName:', productName)
+        if (typeof showNotifyModal === 'function') {
+          showNotifyModal(productName)
+        } else {
+          console.error('showNotifyModal is not a function')
         }
       })
-      console.log('Notify Me button handler attached (backup to onclick)')
-    } else {
-      console.error('Notify Me button not found')
+      console.log('Notify Me button handler attached')
+      return true
     }
-  }, 0)
+    return false
+  }
+  
+  // Try immediately and after delays
+  if (!attachNotifyHandler()) {
+    setTimeout(() => attachNotifyHandler(), 0)
+    setTimeout(() => attachNotifyHandler(), 50)
+    setTimeout(() => attachNotifyHandler(), 100)
+    setTimeout(() => attachNotifyHandler(), 200)
+  }
 }
 
 // Show success modal (styled to match site aesthetic)
