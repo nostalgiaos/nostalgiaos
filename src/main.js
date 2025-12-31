@@ -480,7 +480,7 @@ function showMainContent() {
         <!-- Notify Section -->
         <div class="homepage-notify-section">
           <p class="homepage-notify-text">get notified when new items arrive</p>
-          <a href="#" class="homepage-notify-link" id="homepage-notify-link">notify me</a>
+          <a href="#" class="homepage-notify-link" id="homepage-notify-link" onclick="window.showNotifyModalForProduct('new items'); return false;">notify me</a>
         </div>
         
         <!-- Legal / System Block -->
@@ -1205,7 +1205,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                   </div>
                   
                   <!-- Notify Me Button -->
-                  <button class="notify-me-btn">Notify Me</button>
+                  <button class="notify-me-btn" onclick="window.showNotifyModalForProduct('${productName}')">Notify Me</button>
                 </div>
               </div>
             </div>
