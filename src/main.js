@@ -1295,13 +1295,24 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
-  // Notify Me button handler
-  const notifyBtn = document.querySelector('.notify-me-btn')
-  if (notifyBtn) {
-    notifyBtn.addEventListener('click', function() {
-      showNotifyModal(productName)
-    })
-  }
+  // Notify Me button handler - use setTimeout to ensure DOM is ready
+  setTimeout(() => {
+    const notifyBtn = document.querySelector('.notify-me-btn')
+    if (notifyBtn) {
+      // Remove any existing listeners first
+      const newNotifyBtn = notifyBtn.cloneNode(true)
+      notifyBtn.parentNode.replaceChild(newNotifyBtn, notifyBtn)
+      
+      // Add click handler
+      newNotifyBtn.addEventListener('click', function(e) {
+        e.preventDefault()
+        e.stopPropagation()
+        showNotifyModal(productName)
+      })
+    } else {
+      console.error('Notify Me button not found')
+    }
+  }, 0)
 }
 
 // Show success modal (styled to match site aesthetic)
