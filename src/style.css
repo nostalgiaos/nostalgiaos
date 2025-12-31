@@ -2603,9 +2603,9 @@ a {
 }
 
 .specs-title {
-  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 300;
   color: #000000;
   text-transform: lowercase;
 }
@@ -2666,7 +2666,7 @@ a {
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
   font-size: 14px;
   color: #333333;
   border-bottom: 1px solid #E8E8E8;
@@ -2677,7 +2677,7 @@ a {
 }
 
 .spec-label {
-  font-weight: 400;
+  font-weight: 300;
   color: #666666;
 }
 
