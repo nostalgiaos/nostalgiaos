@@ -313,29 +313,13 @@ body.booted {
   z-index: 1;
 }
 
-/* Apple Logo on bottom bezel - EDIT POSITION AND SIZE HERE */
+/* Apple Logo on bottom bezel - REMOVED - no longer used */
 .monitor-logo {
-  position: absolute;
-  /* LOGO POSITION - Edit these pixel values to move the logo */
-  bottom: 32px;      /* Increase to move DOWN, decrease/negative to move UP */
-  left: 50%;         /* 50% = centered, or use pixel values like 100px */
-  transform: translateX(-50%);  /* Keeps it centered, or use translateX(0px) and adjust left */
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
+  display: none !important;
 }
 
 .monitor-logo img {
-  /* LOGO SIZE - Edit height to make bigger/smaller (width adjusts automatically) */
-  height: 64px;      /* Change this value to resize (e.g., 30px, 40px, 50px) */
-  width: auto;       /* Or set specific width like: width: 30px; */
-  display: block;
-  /* LOGO OPACITY - Edit this (0.0 to 1.0) to change visibility */
-  opacity: 1;
-  /* LOGO COLOR - Remove filter for color, or adjust grayscale */
-  filter: none;
+  display: none !important;
 }
 
 .monitor-screen {
