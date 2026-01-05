@@ -288,36 +288,94 @@ async function showBootScreen() {
   const svg = container.querySelector('svg')
   
   if (svg) {
-    // Find the progress bar background - the rect at y="220" (the progress bar container)
-    const progressBarBg = svg.querySelector('rect[y="220"]')
+    // Find the progress bar background - look for rect near bottom of screen (y around 200-220)
+    // Try multiple possible positions, prefer the lower one (y="219" or higher y value)
+    let progressBarBg = svg.querySelector('rect[y="219"]') || 
+                        svg.querySelector('rect[y="220"]') ||
+                        svg.querySelector('rect[y="202"]')
+    
+    // If not found by exact y, find by position (rect near bottom with reasonable width)
+    // Prefer the one with the highest y value (lowest on screen) as it's likely the progress bar
+    if (!progressBarBg) {
+      const allRects = svg.querySelectorAll('rect')
+      let candidate = null
+      let maxY = 0
+      for (const rect of allRects) {
+        const y = parseFloat(rect.getAttribute('y'))
+        const width = parseFloat(rect.getAttribute('width'))
+        const fill = rect.getAttribute('fill')
+        // Look for rect near bottom (y > 200) with width around 147 (progress bar width)
+        // Also check if it has a gray fill color (#DEDEDE or similar)
+        if (y >= 200 && y <= 225 && width >= 140 && width <= 150) {
+          if (y > maxY) {
+            maxY = y
+            candidate = rect
+          }
+        }
+      }
+      if (candidate) {
+        progressBarBg = candidate
+      }
+    }
     
     if (progressBarBg) {
-      // Get the dimensions and position
+      // Hide the original rect - there might be another one behind it from the SVG
+      progressBarBg.setAttribute('display', 'none')
+      
+      // Get the dimensions and position from the original
       const bgX = parseFloat(progressBarBg.getAttribute('x'))
       const bgY = parseFloat(progressBarBg.getAttribute('y'))
       const bgWidth = parseFloat(progressBarBg.getAttribute('width'))
       const bgHeight = parseFloat(progressBarBg.getAttribute('height'))
       
-      // Update the background bar to have the correct fill and stroke on the outside
-      progressBarBg.setAttribute('fill', '#CDCFFF')
-      progressBarBg.setAttribute('stroke', '#3E3D42')
-      progressBarBg.setAttribute('stroke-width', '1')
-      progressBarBg.setAttribute('stroke-linejoin', 'miter')
+      // Also hide any other rects in the same area that might be showing
+      const allRects = svg.querySelectorAll('rect')
+      allRects.forEach(rect => {
+        const y = parseFloat(rect.getAttribute('y'))
+        const x = parseFloat(rect.getAttribute('x'))
+        const width = parseFloat(rect.getAttribute('width'))
+        // Hide any rect that's in the same area as the progress bar
+        if (y >= bgY - 5 && y <= bgY + bgHeight + 5 && 
+            x >= bgX - 5 && x <= bgX + bgWidth + 5 &&
+            rect !== progressBarBg) {
+          rect.setAttribute('display', 'none')
+        }
+      })
+      
+      // Create a new background bar with reduced height
+      // Reduce height to make it less tall
+      const reducedHeight = Math.max(10, bgHeight * 0.5) // Make it 50% of original height, minimum 10px
+      const heightDiff = bgHeight - reducedHeight
+      // Move it up by using less offset (move closer to original top)
+      const newY = bgY + heightDiff * 0.3 // Move up more (30% offset instead of 50%)
+      
+      // Create new background bar
+      const newBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
+      newBg.setAttribute('x', bgX.toString())
+      newBg.setAttribute('y', newY.toString())
+      newBg.setAttribute('width', bgWidth.toString())
+      newBg.setAttribute('height', reducedHeight.toString())
+      newBg.setAttribute('fill', '#CDCFFF')
+      newBg.setAttribute('stroke', '#3E3D42')
+      newBg.setAttribute('stroke-width', '1')
+      newBg.setAttribute('stroke-linejoin', 'miter')
+      newBg.setAttribute('id', 'progress-bar-bg')
       
       // Create progress fill element with color #424242
       // Position it slightly inside to account for the stroke
       const strokeWidth = 1
       const progressFill = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
       progressFill.setAttribute('x', (bgX + strokeWidth).toString())
-      progressFill.setAttribute('y', (bgY + strokeWidth).toString())
+      progressFill.setAttribute('y', (newY + strokeWidth).toString())
       progressFill.setAttribute('width', '0')
-      progressFill.setAttribute('height', (bgHeight - strokeWidth * 2).toString())
+      progressFill.setAttribute('height', (reducedHeight - strokeWidth * 2).toString())
       progressFill.setAttribute('fill', '#424242')
       progressFill.setAttribute('id', 'progress-fill')
       // No stroke on the progress fill
       
-      // Insert progress fill after the background so it appears on top
-      progressBarBg.parentNode.insertBefore(progressFill, progressBarBg.nextSibling)
+      // Insert both elements after the original progressBarBg
+      progressBarBg.parentNode.insertBefore(newBg, progressBarBg.nextSibling)
+      progressBarBg.parentNode.insertBefore(progressFill, newBg.nextSibling)
       
       // Animate progress bar from left to right
       let progress = 0
@@ -1880,37 +1938,38 @@ function startTerminalAnimation() {
   
   const lines = [
     'NostalgiaOS Terminal v1.0',
-    '(c) 2025 NostalgiaOS',
-    'All memory preserved.',
+    'Copyright © 2025 NostalgiaOS',
+    'All rights reserved.',
     '',
     'Initializing system...',
     '',
-    { type: 'header', text: 'SYSTEM OVERVIEW' },
-    { type: 'body', text: 'NostalgiaOS is a physical operating system' },
-    { type: 'body', text: 'inspired by early personal computing,' },
-    { type: 'body', text: 'offline culture, and intentional design.' },
+    { type: 'header', text: 'OVERVIEW' },
+    { type: 'body', text: 'NostalgiaOS reimagines the relationship' },
+    { type: 'body', text: 'between technology and human experience.' },
+    { type: 'body', text: 'Designed for those who value thoughtful' },
+    { type: 'body', text: 'craftsmanship and meaningful connection.' },
     '',
     { type: 'header', text: 'SPECIFICATIONS' },
-    { type: 'body', text: 'PLATFORM: Physical Apparel & Objects' },
-    { type: 'body', text: 'INTERFACE: Tactile / Human' },
-    { type: 'body', text: 'RELEASE MODEL: Limited Drops' },
-    { type: 'body', text: 'LATENCY: Immediate' },
-    { type: 'body', text: 'COMPATIBILITY: Humans' },
-    { type: 'body', text: 'ERROR HANDLING: Imperfection Accepted' },
+    { type: 'body', text: 'PLATFORM: Apparel & Objects' },
+    { type: 'body', text: 'INTERFACE: Tactile Experience' },
+    { type: 'body', text: 'AVAILABILITY: Limited Edition' },
+    { type: 'body', text: 'RESPONSE TIME: Instant' },
+    { type: 'body', text: 'COMPATIBILITY: Universal' },
+    { type: 'body', text: 'DESIGN PHILOSOPHY: Thoughtful Simplicity' },
     '',
-    { type: 'header', text: 'OPERATING PRINCIPLES' },
-    { type: 'body', text: '- Memory over metrics' },
-    { type: 'body', text: '- Physical before digital' },
-    { type: 'body', text: '- Design before scale' },
-    { type: 'body', text: '- Nostalgia is a feature' },
+    { type: 'header', text: 'DESIGN PRINCIPLES' },
+    { type: 'body', text: '• Crafted with intention' },
+    { type: 'body', text: '• Designed for connection' },
+    { type: 'body', text: '• Built to last' },
+    { type: 'body', text: '• Inspired by the past, made for today' },
     '',
-    { type: 'header', text: 'ORIGIN' },
-    { type: 'body', text: 'FIRST COMPILED: 2025' },
-    { type: 'body', text: 'ENVIRONMENT: Internet + Childhood' },
+    { type: 'header', text: 'VERSION' },
+    { type: 'body', text: 'RELEASE: 2025' },
+    { type: 'body', text: 'BUILD: Initial Release' },
     '',
     { type: 'header', text: 'STATUS' },
-    { type: 'body', text: 'SYSTEM STATUS: ACTIVE' },
-    { type: 'body', text: 'LAST UPDATE: ONGOING' },
+    { type: 'body', text: 'SYSTEM STATUS: Operational' },
+    { type: 'body', text: 'UPDATES: Continuous' },
     '',
     '>',
     '',
