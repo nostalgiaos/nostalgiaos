@@ -416,31 +416,14 @@ body.booted {
   overflow: visible;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 0;
 }
 
-/* Navigation Logo */
-.nav-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0 20px;
-  cursor: pointer;
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 12px 0 0 12px;
-  transition: opacity 0.2s ease;
-}
-
-.nav-logo:hover {
-  opacity: 0.7;
-}
-
-.nav-logo img {
-  height: 28px;
-  width: auto;
-  display: block;
+/* Hide any icons/images in the nav bar */
+.top-nav-bar img,
+.top-nav-bar svg {
+  display: none !important;
 }
 
 
@@ -470,11 +453,11 @@ body.booted {
 }
 
 .nav-btn:first-child {
-  /* Home button - wider than other buttons, no left border radius (logo has it) */
+  /* Home button - wider than other buttons, rounded left corners */
   padding-left: 38px;
   padding-right: 40px;
   min-width: 120px;
-  border-radius: 0;
+  border-radius: 12px 0 0 12px;
 }
 
 .nav-btn:last-child {
@@ -824,21 +807,8 @@ body.mobile-view .shop-container.home-page-container > .top-nav-bar {
   overflow: visible !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
+  justify-content: space-between !important;
   padding: 0 !important;
-}
-
-/* Mobile nav logo */
-body.mobile-view .shop-container > .top-nav-bar .nav-logo,
-body.mobile-view .shop-container.home-page-container > .top-nav-bar .nav-logo {
-  padding: 0 10px !important;
-  border-radius: 8px 0 0 8px !important;
-}
-
-body.mobile-view .shop-container > .top-nav-bar .nav-logo img,
-body.mobile-view .shop-container.home-page-container > .top-nav-bar .nav-logo img {
-  height: 20px !important;
-  width: auto !important;
 }
 
 /* Mobile nav buttons - make them equal width - applies to ALL pages */
