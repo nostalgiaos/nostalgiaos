@@ -1420,7 +1420,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   
   /* Fix positioning for flag item on mobile - bring it closer to the image */
   .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-info {
-    margin-top: -15px !important;
+    margin-top: -40px !important;
   }
 }
 
