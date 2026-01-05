@@ -431,7 +431,7 @@ body.booted {
   box-shadow: 
     inset 0 0 0 1px rgba(0, 0, 0, 0.3),
     0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  overflow: visible;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -471,6 +471,10 @@ body.booted {
   padding-right: 40px;
   min-width: 120px;
   border-radius: 12px 0 0 12px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .nav-btn:last-child {
@@ -1130,7 +1134,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   box-shadow: 
     inset 0 0 0 1px rgba(0, 0, 0, 0.3),
     0 4px 4px 0 rgba(0, 0, 0, 0.25) !important;
-  overflow: visible !important;
+  overflow: hidden !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
@@ -1140,6 +1144,10 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 /* Ensure nav buttons on homepage have correct border-radius */
 .shop-container.home-page-container > .top-nav-bar .nav-btn:first-child {
   border-radius: 12px 0 0 12px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .shop-container.home-page-container > .top-nav-bar .nav-btn:last-child {
