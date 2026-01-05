@@ -1400,6 +1400,23 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-info {
     margin-top: 0px;
   }
+  
+  /* Fix positioning for marlboros item on mobile */
+  .marlboros-item .product-showcase-info {
+    margin-top: 10px !important;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Ensure proper spacing between product items on mobile */
+  .product-showcase-item {
+    margin-bottom: 40px !important;
+  }
+  
+  /* Fix positioning for flag item on mobile */
+  .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-info {
+    margin-top: 10px !important;
+  }
 }
 
 .product-showcase-name {
