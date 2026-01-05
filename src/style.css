@@ -712,6 +712,7 @@ body.booted {
     margin: 0 auto !important;
     padding: 500px 20px 0 !important;
     min-height: calc(100vh + 600px) !important;
+    overflow: visible !important;
     height: auto !important;
     position: relative !important;
     overflow: visible !important;
@@ -1103,8 +1104,12 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     #EFEFEF 65%,
     #FFFFFF 100%
   ) !important;
-  /* Corner radius: 12 */
+  /* Corner radius: 12 - explicitly set all corners to ensure left corners are rounded */
   border-radius: 12px !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
   /* Inside stroke: #000000 at 30% opacity, weight 1 */
   /* Drop shadow: X: 0, Y: 4, Blur: 4, Spread: 0, Color: #000000 at 25% opacity */
   box-shadow: 
@@ -1129,6 +1134,8 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 /* Ensure ::before pseudo-element on homepage nav bar has correct border-radius */
 .shop-container.home-page-container > .top-nav-bar::before {
   border-radius: 12px 12px 0 0 !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
 }
 
 /* MOBILE ONLY - Override nav bar - REMOVED conflicting top: 10px, using body.mobile-view rule instead */
