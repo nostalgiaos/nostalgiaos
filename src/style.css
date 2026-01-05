@@ -1094,6 +1094,7 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   margin-right: calc(-50vw + 50% + 15px);
   margin-top: 0;
   margin-bottom: 80px;
+  border-radius: 12px !important;
 }
 
 /* MOBILE ONLY - Override nav bar - REMOVED conflicting top: 10px, using body.mobile-view rule instead */
