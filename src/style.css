@@ -406,7 +406,7 @@ body.booted {
     #FFFFFF 100%
   );
   /* Corner radius: 12 */
-  border-radius: 12px;
+  border-radius: 12px !important;
   /* Inside stroke: #000000 at 30% opacity, weight 1 */
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
   /* Drop shadow: X: 0, Y: 4, Blur: 4, Spread: 0, Color: #000000 at 25% opacity */
@@ -457,7 +457,7 @@ body.booted {
   padding-left: 38px;
   padding-right: 40px;
   min-width: 120px;
-  border-radius: 12px 0 0 12px;
+  border-radius: 12px 0 0 12px !important;
 }
 
 .nav-btn:last-child {
@@ -466,7 +466,7 @@ body.booted {
   padding-right: 38px;
   border-right: none;
   border-left: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0 12px 12px 0;
+  border-radius: 0 12px 12px 0 !important;
 }
 
 /* README button - ensure it has borders on both sides */
