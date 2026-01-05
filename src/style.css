@@ -1418,9 +1418,9 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     margin-bottom: 40px !important;
   }
   
-  /* Fix positioning for flag item on mobile */
+  /* Fix positioning for flag item on mobile - bring it closer to the image */
   .product-showcase-item[data-product="nostalgia-flag-01"] .product-showcase-info {
-    margin-top: 10px !important;
+    margin-top: -15px !important;
   }
 }
 
