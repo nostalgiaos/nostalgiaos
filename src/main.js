@@ -415,9 +415,6 @@ function showMainContent() {
       <div class="shop-container home-page-container">
         <!-- Top Navigation Bar -->
         <nav class="top-nav-bar">
-          <div class="nav-logo" id="nav-logo-home">
-            <img src="/macosicon.svg" alt="Nostalgia OS Logo" />
-          </div>
           <div class="nav-btn nav-btn-left active">Home</div>
           <div class="nav-btn nav-btn-left">softwear</div>
           <div class="nav-btn nav-btn-left">hardwear</div>
@@ -676,13 +673,6 @@ function showMainContent() {
     })
   })
 
-  // Add logo click handler (navigate to home)
-  document.querySelectorAll('.nav-logo').forEach(logo => {
-    logo.addEventListener('click', function() {
-      showMainContent()
-    })
-  })
-
   // Add navigation button click handlers
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -800,9 +790,6 @@ function showSoftwearPage() {
       <div class="shop-container">
             <!-- Top Navigation Bar -->
             <nav class="top-nav-bar">
-              <div class="nav-logo" id="nav-logo-softwear">
-                <img src="/macosicon.svg" alt="Nostalgia OS Logo" />
-              </div>
               <div class="nav-btn nav-btn-left">Home</div>
               <div class="nav-btn nav-btn-left active">softwear</div>
               <div class="nav-btn nav-btn-left">hardwear</div>
@@ -1084,9 +1071,6 @@ function showProductDetailPage(productId, productName, productImage, price, acti
       <div class="shop-container">
             <!-- Top Navigation Bar -->
             <nav class="top-nav-bar">
-              <div class="nav-logo" id="nav-logo-detail">
-                <img src="/macosicon.svg" alt="Nostalgia OS Logo" />
-              </div>
               <div class="nav-btn nav-btn-left">Home</div>
               <div class="nav-btn nav-btn-left ${softwearActive}">softwear</div>
               <div class="nav-btn nav-btn-left ${hardwearActive}">hardwear</div>
@@ -1632,9 +1616,6 @@ function showHardwearPage() {
       <div class="shop-container">
             <!-- Top Navigation Bar -->
             <nav class="top-nav-bar">
-              <div class="nav-logo" id="nav-logo-hardwear">
-                <img src="/macosicon.svg" alt="Nostalgia OS Logo" />
-              </div>
               <div class="nav-btn nav-btn-left">Home</div>
               <div class="nav-btn nav-btn-left">softwear</div>
               <div class="nav-btn nav-btn-left active">hardwear</div>
@@ -2030,9 +2011,6 @@ function showBasketPage() {
       <div class="shop-container">
             <!-- Top Navigation Bar -->
             <nav class="top-nav-bar">
-              <div class="nav-logo" id="nav-logo-basket">
-                <img src="/macosicon.svg" alt="Nostalgia OS Logo" />
-              </div>
               <div class="nav-btn nav-btn-left">Home</div>
               <div class="nav-btn nav-btn-left">softwear</div>
               <div class="nav-btn nav-btn-left">hardwear</div>

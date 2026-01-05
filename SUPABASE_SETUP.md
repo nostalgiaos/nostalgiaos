@@ -93,3 +93,4 @@ The `anon public` key is safe to expose in frontend code. Supabase uses Row Leve
 
 Go to Supabase → **Table Editor** → `waitlist` to see all submissions. You can export as CSV or connect to other tools.
 
+
