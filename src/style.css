@@ -3993,25 +3993,11 @@ a {
 }
 
 .success-icon-wrapper {
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: none;
 }
 
 .success-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #34C759 0%, #28A745 100%);
-  color: #FFFFFF;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 300;
-  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.3);
-  line-height: 1;
+  display: none;
 }
 
 .success-modal-message {
@@ -4032,34 +4018,58 @@ a {
 }
 
 .success-modal-btn {
-  padding: 10px 32px;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  border: none;
-  border-radius: 6px;
+  padding: 5px 20px;
+  font-size: 13px;
+  font-weight: 400;
+  border: 2px solid;
+  border-radius: 9px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 100px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+  transition: all 0.1s ease;
+  min-width: 70px;
+  text-align: center;
+  position: relative;
   letter-spacing: -0.01em;
+  overflow: hidden;
 }
 
 .success-modal-btn.primary {
-  background: #007AFF;
-  color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  background: #FFFFFF;
+  color: #333333;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-shadow: none;
+  position: relative;
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+.success-modal-btn.primary::before {
+  display: none;
 }
 
 .success-modal-btn.primary:hover {
-  background: #0051D5;
-  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
-  transform: translateY(-1px);
+  color: #4661C5;
+  background: #F8F9FF;
+  border-color: #4661C5;
+  box-shadow: 0 2px 4px rgba(70, 97, 197, 0.1);
+}
+
+.success-modal-btn.primary:hover::before {
+  display: none;
 }
 
 .success-modal-btn.primary:active {
-  background: #0040B3;
-  box-shadow: 0 1px 4px rgba(0, 122, 255, 0.3);
-  transform: translateY(0);
+  color: #2E4A8F;
+  background: #E8EBF5;
+  border-color: #2E4A8F;
+  box-shadow: 0 1px 2px rgba(70, 97, 197, 0.15);
+}
+
+.success-modal-btn.primary:active::before {
+  display: none;
 }
 
 /* Mobile styles for success modal */
@@ -4074,15 +4084,6 @@ a {
     padding: 24px 20px 20px;
   }
   
-  .success-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 28px;
-  }
-  
-  .success-icon-wrapper {
-    margin-bottom: 16px;
-  }
   
   .success-modal-message {
     font-size: 13px;

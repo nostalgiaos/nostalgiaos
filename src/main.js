@@ -1585,9 +1585,6 @@ function showSuccessModal(title, message, onClose) {
         <h3 class="success-modal-title">${title}</h3>
       </div>
       <div class="success-modal-content">
-        <div class="success-icon-wrapper">
-          <div class="success-icon">✓</div>
-        </div>
         <p class="success-modal-message">${message}</p>
         <div class="success-modal-buttons">
           <button class="success-modal-btn primary">OK</button>
