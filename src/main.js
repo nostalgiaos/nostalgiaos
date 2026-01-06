@@ -544,6 +544,17 @@ function showMainContent() {
         <!-- Legal / System Block -->
         <div class="legal-system-block">
           <div class="legal-system-content">
+            <div class="legal-links-section">
+              <div class="legal-links">
+                <a href="#" class="legal-link" id="footer-privacy-link">Privacy Policy</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-terms-link">Terms of Service</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-shipping-link">Shipping Policy</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-return-link">Return Policy</a>
+              </div>
+            </div>
             <div class="legal-divider-line"></div>
             <div class="legal-footer-row">
               <div class="legal-copyright">Not Copyrighted © 2025 NostalgiaOS. No rights reserved.</div>
@@ -753,14 +764,8 @@ function showMainContent() {
     })
   })
 
-  // Footer README link handler
-  const footerReadmeLink = document.getElementById('footer-readme-link')
-  if (footerReadmeLink) {
-    footerReadmeLink.addEventListener('click', function(e) {
-      e.preventDefault()
-      showReadmeModal()
-    })
-  }
+  // Set up footer handlers
+  setupFooterHandlers()
 
   // Homepage notify link handler
   const homepageNotifyLink = document.getElementById('homepage-notify-link')
@@ -892,6 +897,7 @@ function showSoftwearPage() {
                 </div>
               </div>
             </div>
+            ${getFooterHTML()}
           </div>
         </div>
       </div>
@@ -1092,6 +1098,9 @@ function showSoftwearPage() {
   
   // Set up product hover functionality (for products with front/back images)
   setupProductHover()
+  
+  // Set up footer handlers
+  setupFooterHandlers()
 }
 
 // Product Detail Page
@@ -1397,6 +1406,9 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     }, 500)
   }
   
+  // Set up footer handlers
+  setupFooterHandlers()
+  
   // Notify Me button handler
   const notifyBtn = document.querySelector('.notify-me-btn')
   if (notifyBtn) {
@@ -1415,6 +1427,9 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   if (isHoodie || isJeans) {
     setupProductCarousel()
   }
+  
+  // Set up footer handlers
+  setupFooterHandlers()
 }
 
 // Set up carousel functionality for product detail page
@@ -1891,6 +1906,7 @@ function showHardwearPage() {
                 </div>
               </div>
             </div>
+            ${getFooterHTML()}
           </div>
         </div>
       </div>
@@ -1973,6 +1989,246 @@ function showHardwearPage() {
       convertAllSVGImagesToInline()
     }, 500)
   }
+  
+  // Set up footer handlers
+  setupFooterHandlers()
+}
+
+// Get footer HTML (reusable across all pages)
+function getFooterHTML() {
+  return `
+        <!-- Legal / System Block -->
+        <div class="legal-system-block">
+          <div class="legal-system-content">
+            <div class="legal-links-section">
+              <div class="legal-links">
+                <a href="#" class="legal-link" id="footer-privacy-link">Privacy Policy</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-terms-link">Terms of Service</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-shipping-link">Shipping Policy</a>
+                <span class="legal-link-separator">|</span>
+                <a href="#" class="legal-link" id="footer-return-link">Return Policy</a>
+              </div>
+            </div>
+            <div class="legal-divider-line"></div>
+            <div class="legal-footer-row">
+              <div class="legal-copyright">Not Copyrighted © 2025 NostalgiaOS. No rights reserved.</div>
+              <div class="legal-links">
+                <a href="#" class="legal-link" id="footer-readme-link">README</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  `
+}
+
+// Set up footer handlers (reusable across all pages)
+function setupFooterHandlers() {
+  // Footer legal links handlers
+  const footerPrivacyLink = document.getElementById('footer-privacy-link')
+  if (footerPrivacyLink) {
+    footerPrivacyLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      showLegalPage('privacy')
+    })
+  }
+  
+  const footerTermsLink = document.getElementById('footer-terms-link')
+  if (footerTermsLink) {
+    footerTermsLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      showLegalPage('terms')
+    })
+  }
+  
+  const footerShippingLink = document.getElementById('footer-shipping-link')
+  if (footerShippingLink) {
+    footerShippingLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      showLegalPage('shipping')
+    })
+  }
+  
+  const footerReturnLink = document.getElementById('footer-return-link')
+  if (footerReturnLink) {
+    footerReturnLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      showLegalPage('return')
+    })
+  }
+  
+  // Footer README link handler
+  const footerReadmeLink = document.getElementById('footer-readme-link')
+  if (footerReadmeLink) {
+    footerReadmeLink.addEventListener('click', function(e) {
+      e.preventDefault()
+      showReadmeModal()
+    })
+  }
+}
+
+// Show legal page (Privacy Policy, Terms of Service, Shipping Policy, Return Policy)
+function showLegalPage(pageType) {
+  resetViewportZoom()
+  
+  // Force scroll to top before rendering
+  window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  window.scrollTo(0, 0)
+  if (document.documentElement) {
+    document.documentElement.scrollTop = 0
+    document.documentElement.scrollTo(0, 0)
+  }
+  if (document.body) {
+    document.body.scrollTop = 0
+    document.body.scrollTo(0, 0)
+  }
+  if (document.scrollingElement) {
+    document.scrollingElement.scrollTop = 0
+    document.scrollingElement.scrollTo(0, 0)
+  }
+  
+  document.documentElement.style.scrollBehavior = 'auto'
+  
+  // Define page content based on type
+  let pageTitle = ''
+  let pageContent = ''
+  
+  switch(pageType) {
+    case 'privacy':
+      pageTitle = 'Privacy Policy'
+      pageContent = `
+        <p>Last updated: ${new Date().getFullYear()}</p>
+        
+        <h3>OVERVIEW</h3>
+        <p>This website is operated by NostalgiaOS. Throughout the site, the terms "we", "us" and "our" refer to NostalgiaOS. NostalgiaOS offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here. By visiting our site and/ or purchasing something from us, you engage in our "Service" and agree to be bound by the following terms and conditions, including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content.</p>
+        
+        <h3>INFORMATION WE COLLECT</h3>
+        <p>We collect information that you provide directly to us, including when you create an account, make a purchase, or contact us for support. This may include your name, email address, shipping address, payment information, and any other information you choose to provide. We also automatically collect certain information about your device when you visit our website, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device.</p>
+        
+        <h3>HOW WE USE YOUR INFORMATION</h3>
+        <p>We use the information we collect to process your orders, communicate with you about your orders and our products, send you marketing communications (if you have opted in), improve our services, and comply with legal obligations. We do not sell, trade, or rent your personal information to third parties. We may share your information only as necessary to fulfill your orders, provide our services, comply with legal obligations, or protect our rights.</p>
+        
+        <h3>YOUR RIGHTS</h3>
+        <p>You have the right to access, update, or delete your personal information at any time by contacting us. You may also opt out of marketing communications at any time. If you have questions about this Privacy Policy, please contact us.</p>
+      `
+      break
+    case 'terms':
+      pageTitle = 'Terms of Service'
+      pageContent = `
+        <p>Last updated: ${new Date().getFullYear()}</p>
+        
+        <h3>OVERVIEW</h3>
+        <p>This website is operated by NostalgiaOS. Throughout the site, the terms "we", "us" and "our" refer to NostalgiaOS. By visiting our site and/or purchasing something from us, you engage in our "Service" and agree to be bound by the following terms and conditions. These Terms of Service apply to all users of the site. Please read these Terms of Service carefully before accessing or using our website. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services.</p>
+        
+        <h3>SECTION 1 - ONLINE STORE TERMS</h3>
+        <p>By agreeing to these Terms of Service, you represent that you are at least the age of majority in your state or province of residence. You may not use our products for any illegal or unauthorized purpose nor may you, in the use of the Service, violate any laws in your jurisdiction. You must not transmit any worms or viruses or any code of a destructive nature. A breach or violation of any of the Terms will result in an immediate termination of your Services.</p>
+        
+        <h3>SECTION 2 - GENERAL CONDITIONS</h3>
+        <p>We reserve the right to refuse service to anyone for any reason at any time. You understand that your content (not including credit card information), may be transferred unencrypted and involve transmissions over various networks. Credit card information is always encrypted during transfer over networks. You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Service without express written permission by us.</p>
+        
+        <h3>SECTION 3 - PRODUCTS AND PRICING</h3>
+        <p>We strive to provide accurate product descriptions and images. However, we do not warrant that product descriptions or other content is accurate, complete, reliable, current, or error-free. All prices are subject to change without notice. We reserve the right to modify prices, limit quantities, and discontinue any product at any time.</p>
+      `
+      break
+    case 'shipping':
+      pageTitle = 'Shipping Policy'
+      pageContent = `
+        <p>Last updated: ${new Date().getFullYear()}</p>
+        
+        <h3>SHIPPING METHODS AND PROCESSING</h3>
+        <p>We offer standard shipping and express shipping options. Shipping times vary based on your location and the shipping method selected. Orders are typically processed within 1-3 business days. Processing time may be longer during peak seasons or sales. Once your order ships, you will receive a tracking number via email to monitor your shipment. Shipping rates are calculated at checkout based on your shipping address and the selected shipping method.</p>
+        
+        <h3>INTERNATIONAL SHIPPING</h3>
+        <p>We ship to most countries worldwide. International orders may be subject to customs fees and import duties, which are the responsibility of the customer. These fees are not included in the shipping cost and will be collected by your local customs office. Please check with your local customs office for more information about potential fees before placing an order.</p>
+        
+        <h3>SHIPPING DELAYS AND LOST PACKAGES</h3>
+        <p>While we strive to meet estimated delivery dates, delays may occur due to circumstances beyond our control, including weather, carrier delays, or customs processing. If your package is lost or damaged during shipping, please contact us immediately with your order number and we will work with the carrier to resolve the issue. We are not responsible for packages that are lost or stolen after delivery confirmation.</p>
+      `
+      break
+    case 'return':
+      pageTitle = 'Return Policy'
+      pageContent = `
+        <p>Last updated: ${new Date().getFullYear()}</p>
+        
+        <h3>RETURN ELIGIBILITY AND PROCESS</h3>
+        <p>Items must be returned within 30 days of delivery. Items must be unworn, unwashed, and in their original condition with tags attached. To initiate a return, please contact us with your order number. We will provide you with a return authorization and instructions. Return shipping costs are the responsibility of the customer unless the item is defective or we made an error.</p>
+        
+        <h3>REFUNDS AND EXCHANGES</h3>
+        <p>Once we receive and inspect your return, we will process your refund to the original payment method within 5-10 business days. We currently do not offer direct exchanges. Please return the item and place a new order for the desired size or style. Items marked as final sale are not eligible for return or exchange.</p>
+      `
+      break
+  }
+  
+  document.querySelector('#app').innerHTML = `
+    <div class="monitor-wrapper">
+      <div class="shop-container">
+        <!-- Top Navigation Bar -->
+        <nav class="top-nav-bar">
+          <div class="nav-btn nav-btn-left">Home</div>
+          <div class="nav-btn nav-btn-left">softwear</div>
+          <div class="nav-btn nav-btn-left">hardwear</div>
+          <div class="nav-btn nav-btn-right">basket</div>
+        </nav>
+        
+        <!-- Legal Page Content -->
+        <div class="shop-content legal-page ${pageType === 'terms' ? 'legal-page-terms' : ''} ${pageType === 'privacy' ? 'legal-page-privacy' : ''} ${pageType === 'shipping' ? 'legal-page-shipping' : ''} ${pageType === 'return' ? 'legal-page-return' : ''}">
+          <div class="legal-page-wrapper">
+            <div class="legal-page-content">
+              <h1 class="legal-page-title">${pageTitle}</h1>
+              <div class="legal-page-body">
+                ${pageContent}
+              </div>
+            </div>
+          </div>
+          ${getFooterHTML()}
+        </div>
+      </div>
+    </div>
+  `
+  
+  // Force scroll to top after rendering
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    window.scrollTo(0, 0)
+    if (document.documentElement) {
+      document.documentElement.scrollTop = 0
+      document.documentElement.scrollTo(0, 0)
+    }
+    if (document.body) {
+      document.body.scrollTop = 0
+      document.body.scrollTo(0, 0)
+    }
+    if (document.scrollingElement) {
+      document.scrollingElement.scrollTop = 0
+      document.scrollingElement.scrollTo(0, 0)
+    }
+  })
+  
+  // Add navigation button click handlers
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const buttonText = this.textContent.trim().toLowerCase()
+      
+      // Update active state
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'))
+      this.classList.add('active')
+      
+      // Navigate based on button
+      if (buttonText === 'softwear') {
+        showSoftwearPage()
+      } else if (buttonText === 'home') {
+        showMainContent()
+      } else if (buttonText === 'hardwear') {
+        showHardwearPage()
+      } else if (buttonText === 'basket') {
+        showBasketPage()
+      }
+    })
+  })
+  
+  // Set up footer handlers
+  setupFooterHandlers()
 }
 
 // Show README modal overlay
@@ -2299,6 +2555,7 @@ function showBasketPage() {
                 </div>
               </div>
             </div>
+            ${getFooterHTML()}
           </div>
         </div>
       </div>
