@@ -606,6 +606,41 @@ body.booted {
   flex-shrink: 0;
 }
 
+/* Override for legal pages */
+.shop-content.legal-page {
+  background: #FFFFFF !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  padding-top: 300px !important;
+  padding-right: 15px !important;
+  padding-bottom: 0 !important;
+  padding-left: 15px !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Shipping Policy - move headers up */
+.shop-content.legal-page.legal-page-shipping {
+  padding-top: 110px !important;
+}
+
+/* Return Policy - move headers up */
+.shop-content.legal-page.legal-page-return {
+  padding-top: 110px !important;
+}
+
+/* Legal page footer spacing - match homepage whitespace */
+.shop-content.legal-page > .legal-page-wrapper {
+  margin-bottom: 20px;
+}
+
+.shop-content.legal-page > .legal-system-block {
+  margin-top: auto !important;
+  margin-bottom: 20px !important;
+  width: 100%;
+}
+
 /* Center product detail content vertically */
 .shop-content:has(.product-detail-content) {
   justify-content: center;
@@ -870,7 +905,39 @@ body.mobile-view .shop-container {
   padding-left: 0 !important;
   padding-right: 0 !important;
   padding-bottom: 40px !important;
+  min-height: 100vh !important;
+  overflow: visible !important;
+}
+
+/* Mobile: Push footer to bottom on softwear/hardwear pages */
+body.mobile-view .shop-container:has(.softwear-content) > .legal-system-block,
+body.mobile-view .shop-container:has(.hardwear-content) > .legal-system-block {
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  order: 999 !important;
+}
+
+/* Mobile: Push footer to bottom on basket page with reduced spacing */
+body.mobile-view .shop-container:has(.basket-scrollbar-container) > .legal-system-block {
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  order: 999 !important;
+}
+
+/* Mobile: Reduce bottom padding on softwear/hardwear containers to eliminate extra space */
+body.mobile-view .shop-container:has(.softwear-content),
+body.mobile-view .shop-container:has(.hardwear-content) {
+  padding-bottom: 20px !important;
   min-height: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Mobile: Reduce bottom padding on basket container to eliminate extra space */
+body.mobile-view .shop-container:has(.basket-scrollbar-container) {
+  padding-bottom: 0 !important;
+  min-height: auto !important;
+  height: auto !important;
   overflow: visible !important;
 }
 
@@ -1316,22 +1383,161 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   flex-shrink: 0;
 }
 
+.legal-links-section {
+  margin-bottom: 20px;
+}
+
 .legal-links {
   display: flex;
   align-items: center;
   gap: 0;
   flex-shrink: 0;
+  flex-wrap: wrap;
 }
 
 .legal-link {
   color: #0066cc;
   text-decoration: none;
   transition: opacity 0.2s ease;
+  font-size: 9px;
 }
 
 .legal-link:hover {
   opacity: 0.7;
   text-decoration: underline;
+}
+
+.legal-link-separator {
+  margin: 0 8px;
+  color: #666666;
+  font-size: 9px;
+}
+
+/* Legal Page Styles - Duplicate removed, defined above after base .shop-content */
+
+.legal-page-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.legal-page-content {
+  width: 100%;
+  padding: 0 40px;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.legal-page-title {
+  font-family: "Apple Garamond Light", "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: #000000;
+  margin: 0 0 30px 0;
+  text-align: left;
+}
+
+.legal-page-body {
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
+}
+
+.legal-page-body h2 {
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #000000;
+  margin: 40px 0 20px 0;
+}
+
+.legal-page-body h3 {
+  font-family: "Apple Garamond", "EB Garamond", "Garamond", "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  margin: 25px 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.legal-page-body p {
+  margin: 0 0 12px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .shop-content.legal-page {
+    padding-top: 140px;
+    padding-bottom: 0;
+  }
+  
+  /* Terms of Service page - lower text from top on mobile */
+  .shop-content.legal-page.legal-page-terms {
+    padding-top: 180px !important;
+  }
+  
+  /* Privacy Policy page - lower text from top on mobile */
+  .shop-content.legal-page.legal-page-privacy {
+    padding-top: 180px !important;
+  }
+  
+  /* Shipping Policy page - move headers up on mobile */
+  .shop-content.legal-page.legal-page-shipping {
+    padding-top: 110px !important;
+  }
+  
+  /* Return Policy page - move headers up on mobile */
+  .shop-content.legal-page.legal-page-return {
+    padding-top: 110px !important;
+  }
+  
+  /* Legal page footer spacing on mobile */
+  .shop-content.legal-page > .legal-page-wrapper {
+    margin-bottom: 15px;
+  }
+  
+  .shop-content.legal-page > .legal-system-block {
+    margin-top: 15px !important;
+  }
+  
+  .legal-page-wrapper {
+    max-width: 100%;
+  }
+  
+  .legal-page-content {
+    padding: 0 20px;
+  }
+  
+  .legal-page-title {
+    font-size: 32px;
+    margin-bottom: 25px;
+  }
+  
+  .legal-page-body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .legal-page-body h2 {
+    font-size: 24px;
+    margin: 30px 0 15px 0;
+  }
+  
+  .legal-page-body h3 {
+    font-size: 13px;
+    margin: 20px 0 6px 0;
+  }
+  
+  .legal-page-body p {
+    margin: 0 0 10px 0;
+  }
+  
+  .legal-link-separator {
+    margin: 0 6px;
+  }
 }
 
 .product-showcase-item {
@@ -1700,6 +1906,98 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   padding: 20px 40px;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+/* Desktop only - match homepage footer spacing on softwear/hardwear pages */
+@media screen and (min-width: 769px) {
+  /* Center content vertically while footer stays at bottom */
+  .shop-content:has(.softwear-content),
+  .shop-content:has(.hardwear-content) {
+    min-height: 0 !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  /* Footer spacing to match homepage */
+  .shop-container:has(.softwear-content) > .legal-system-block,
+  .shop-container:has(.hardwear-content) > .legal-system-block {
+    margin-bottom: 20px !important;
+    margin-top: auto !important;
+  }
+  
+  /* Ensure container doesn't add extra padding or spacing and prevent scroll */
+  .shop-container:has(.softwear-content),
+  .shop-container:has(.hardwear-content) {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+  
+  /* Remove bottom padding/margin from content wrappers to match homepage */
+  .shop-content:has(.softwear-content) .softwear-content,
+  .shop-content:has(.hardwear-content) .hardwear-content {
+    margin-bottom: 0 !important;
+    padding: 20px 40px 0 40px !important; /* Remove bottom padding, keep top and sides */
+  }
+  
+  /* Remove bottom padding from products grid */
+  .shop-content:has(.softwear-content) .products-grid,
+  .shop-content:has(.hardwear-content) .products-grid {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Make content area only take space it needs, no forced minimum height */
+  .softwear-content,
+  .hardwear-content {
+    min-height: 0 !important;
+    height: auto !important;
+    flex: 0 0 auto !important;
+  }
+  
+  /* Ensure hardwear-content doesn't force page to scroll - constrain to fit viewport */
+  .hardwear-content {
+    min-height: 0 !important;
+    max-height: calc(100vh - 250px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Ensure softwear-content also doesn't force scroll */
+  .softwear-content {
+    min-height: 0 !important;
+    max-height: calc(100vh - 250px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Basket page - center content vertically and match homepage footer spacing */
+  .shop-content:has(.basket-scrollbar-container) {
+    min-height: 0 !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  
+  /* Footer spacing for basket page to match homepage */
+  .shop-container:has(.basket-scrollbar-container) > .legal-system-block {
+    margin-bottom: 20px !important;
+    margin-top: auto !important;
+  }
+  
+  /* Ensure basket container doesn't add extra padding or spacing */
+  .shop-container:has(.basket-scrollbar-container) {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
 }
 
 .products-grid {
@@ -4327,4 +4625,5 @@ a {
 }
 
 /* Removed duplicate mobile styles - using the ones defined earlier instead */
+
 
