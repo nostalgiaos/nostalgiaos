@@ -496,7 +496,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" />
+            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">jeans</h3>
@@ -506,7 +506,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/finderhoodie.svg" alt="Hoodie" width="250" height="250" />
+            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -789,7 +789,7 @@ function showMainContent() {
       } else if (productId === 'essentials-02') {
         showProductDetailPage('essentials-02', 'jeans', '/jeans1.svg', productPrice || '$99', section || 'softwear')
       } else if (productId === 'essentials-03') {
-        showProductDetailPage('essentials-03', 'hoodie', '/finderhoodie.svg', productPrice || '$101', section || 'softwear')
+        showProductDetailPage('essentials-03', 'hoodie', '/stevemachoodie_front.png', productPrice || '$101', section || 'softwear')
       } else if (productId === 'marlboros-01') {
         showProductDetailPage('marlboros-01', 'marlboros', '/MarlborOS.svg', productPrice || '$6.80', section || 'hardwear')
       } else if (productId === 'nostalgia-flag-01') {
@@ -811,6 +811,9 @@ function showMainContent() {
       convertAllSVGImagesToInline()
     }, 500)
   }
+  
+  // Set up product hover functionality (for products with front/back images)
+  setupProductHover()
 }
 
 function showSoftwearPage() {
@@ -870,7 +873,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" />
+                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">jeans</h3>
@@ -879,7 +882,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/finderhoodie.svg" alt="Hoodie" width="250" height="250" />
+                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -955,7 +958,7 @@ function showSoftwearPage() {
       } else if (productId === 'essentials-02') {
         showProductDetailPage('essentials-02', 'jeans', '/jeans1.svg', productPrice, 'softwear')
       } else if (productId === 'essentials-03') {
-        showProductDetailPage('essentials-03', 'hoodie', '/finderhoodie.svg', productPrice, 'softwear')
+        showProductDetailPage('essentials-03', 'hoodie', '/stevemachoodie_front.png', productPrice, 'softwear')
       } else if (productId === 'marlboros-01') {
         showProductDetailPage('marlboros-01', 'marlboros', '/MarlborOS.svg', productPrice, 'hardwear')
       } else if (productId === 'nostalgia-flag-01') {
@@ -1086,6 +1089,9 @@ function showSoftwearPage() {
       convertAllSVGImagesToInline()
     }, 500)
   }
+  
+  // Set up product hover functionality (for products with front/back images)
+  setupProductHover()
 }
 
 // Product Detail Page
@@ -1124,6 +1130,16 @@ function showProductDetailPage(productId, productName, productImage, price, acti
     imgHeight = '200'
   }
   
+  // Check if this is a product with front/back images and add hover attributes
+  const isHoodie = productImage.includes('stevemachoodie_front.png')
+  const isJeans = productImage.includes('jeans1.svg')
+  let productAttrs = ''
+  if (isHoodie) {
+    productAttrs = 'data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png"'
+  } else if (isJeans) {
+    productAttrs = 'data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png"'
+  }
+  
   document.querySelector('#app').innerHTML = `
     <div class="monitor-wrapper">
       <div class="shop-container">
@@ -1140,7 +1156,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
               <div class="product-detail-content">
                 <!-- Left: Product Image -->
                 <div class="product-detail-image" data-product-image="${productImage}">
-                  <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" />
+                  <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" ${productAttrs} />
                 </div>
                 
                 <!-- Right: Product Details -->
@@ -1214,7 +1230,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                       ` : productId.includes('essentials-03') ? `
                         <div class="spec-item">
                           <span class="spec-label">Material:</span>
-                          <span class="spec-value">70% Cotton, 30% Polyester</span>
+                          <span class="spec-value">100% Cotton</span>
                         </div>
                         <div class="spec-item">
                           <span class="spec-label">Fit:</span>
@@ -1360,6 +1376,41 @@ function showProductDetailPage(productId, productName, productImage, price, acti
       showNotifyModal(productName)
     })
   }
+  
+  // Set up product hover functionality (for products with front/back images)
+  setupProductHover()
+}
+
+// Set up hover functionality for products with front/back images (hoodie, jeans, etc.)
+function setupProductHover() {
+  // Handle both old hoodie-specific attributes and new generic product attributes
+  const productImages = document.querySelectorAll('[data-product-image], [data-hoodie-image]')
+  
+  productImages.forEach(img => {
+    // Check for new generic attributes first, then fall back to hoodie-specific
+    let frontImage = img.getAttribute('data-product-front')
+    let backImage = img.getAttribute('data-product-back')
+    
+    // Fall back to hoodie-specific attributes for backwards compatibility
+    if (!frontImage) {
+      frontImage = img.getAttribute('data-hoodie-front')
+    }
+    if (!backImage) {
+      backImage = img.getAttribute('data-hoodie-back')
+    }
+    
+    if (frontImage && backImage) {
+      // On hover, show back image
+      img.addEventListener('mouseenter', function() {
+        this.src = backImage
+      })
+      
+      // On mouse leave, show front image
+      img.addEventListener('mouseleave', function() {
+        this.src = frontImage
+      })
+    }
+  })
 }
 
 // Show success modal (styled to match site aesthetic)
