@@ -1155,9 +1155,37 @@ function showProductDetailPage(productId, productName, productImage, price, acti
             <div class="shop-content">
               <div class="product-detail-content">
                 <!-- Left: Product Image -->
+                ${isHoodie ? `
+                <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
+                  <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
+                  <div class="carousel-image-container">
+                    <img src="/stevemachoodie_front.png" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
+                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" />
+                  </div>
+                  <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
+                  <div class="carousel-dots">
+                    <span class="carousel-dot active" data-dot-index="0"></span>
+                    <span class="carousel-dot" data-dot-index="1"></span>
+                  </div>
+                </div>
+                ` : isJeans ? `
+                <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
+                  <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
+                  <div class="carousel-image-container">
+                    <img src="/jeans1.svg" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
+                    <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" />
+                  </div>
+                  <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
+                  <div class="carousel-dots">
+                    <span class="carousel-dot active" data-dot-index="0"></span>
+                    <span class="carousel-dot" data-dot-index="1"></span>
+                  </div>
+                </div>
+                ` : `
                 <div class="product-detail-image" data-product-image="${productImage}">
                   <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" ${productAttrs} />
                 </div>
+                `}
                 
                 <!-- Right: Product Details -->
                 <div class="product-detail-info ${productId.includes('nostalgia-flag') ? 'flag-product' : ''}">
@@ -1378,7 +1406,113 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   }
   
   // Set up product hover functionality (for products with front/back images)
-  setupProductHover()
+  // Only set up hover if not on product detail page (carousel handles it there)
+  if (!document.querySelector('.product-image-carousel')) {
+    setupProductHover()
+  }
+  
+  // Set up carousel functionality for hoodie and jeans
+  if (isHoodie || isJeans) {
+    setupProductCarousel()
+  }
+}
+
+// Set up carousel functionality for product detail page
+function setupProductCarousel() {
+  const carousel = document.querySelector('.product-image-carousel')
+  if (!carousel) return
+  
+  const images = carousel.querySelectorAll('.carousel-image')
+  const dots = carousel.querySelectorAll('.carousel-dot')
+  const leftArrow = carousel.querySelector('.carousel-arrow-left')
+  const rightArrow = carousel.querySelector('.carousel-arrow-right')
+  
+  let currentIndex = 0
+  
+  function showImage(index) {
+    // Hide all images
+    images.forEach((img, i) => {
+      img.classList.remove('active')
+      if (i === index) {
+        img.classList.add('active')
+      }
+    })
+    
+    // Update dots
+    dots.forEach((dot, i) => {
+      dot.classList.remove('active')
+      if (i === index) {
+        dot.classList.add('active')
+      }
+    })
+    
+    currentIndex = index
+  }
+  
+  function nextImage() {
+    const nextIndex = (currentIndex + 1) % images.length
+    showImage(nextIndex)
+  }
+  
+  function prevImage() {
+    const prevIndex = (currentIndex - 1 + images.length) % images.length
+    showImage(prevIndex)
+  }
+  
+  // Arrow click handlers
+  if (leftArrow) {
+    leftArrow.addEventListener('click', prevImage)
+  }
+  if (rightArrow) {
+    rightArrow.addEventListener('click', nextImage)
+  }
+  
+  // Dot click handlers
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => showImage(index))
+  })
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (carousel.closest('.shop-container')) {
+      if (e.key === 'ArrowLeft') {
+        prevImage()
+      } else if (e.key === 'ArrowRight') {
+        nextImage()
+      }
+    }
+  })
+  
+  // Touch/swipe functionality for mobile
+  let touchStartX = 0
+  let touchEndX = 0
+  const imageContainer = carousel.querySelector('.carousel-image-container')
+  
+  if (imageContainer) {
+    imageContainer.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX
+    }, { passive: true })
+    
+    imageContainer.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX
+      handleSwipe()
+    }, { passive: true })
+    
+    function handleSwipe() {
+      const swipeThreshold = 50 // Minimum distance for a swipe
+      const diff = touchStartX - touchEndX
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        if (diff > 0) {
+          // Swipe left - next image
+          nextImage()
+        } else {
+          // Swipe right - previous image
+          prevImage()
+        }
+      }
+    }
+  }
 }
 
 // Set up hover functionality for products with front/back images (hoodie, jeans, etc.)

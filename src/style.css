@@ -2594,6 +2594,121 @@ a {
   padding-top: 00px;
 }
 
+/* Product Image Carousel Styles */
+.product-image-carousel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.carousel-image-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.carousel-image {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15)) drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.carousel-image.active {
+  opacity: 1;
+  pointer-events: auto;
+  position: relative;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  width: 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  padding: 0;
+  opacity: 0.7;
+}
+
+.carousel-arrow::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-style: solid;
+  border-width: 2.5px 2.5px 0 0;
+  border-color: #000000;
+}
+
+.carousel-arrow-left::before {
+  transform: rotate(-135deg);
+}
+
+.carousel-arrow-right::before {
+  transform: rotate(45deg);
+}
+
+.carousel-arrow:active {
+  opacity: 0.8;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow-left {
+  left: 10px;
+}
+
+.carousel-arrow-right {
+  right: 10px;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 20px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #CCCCCC;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+
+.carousel-dot.active {
+  background: #666666;
+  width: 5px;
+  height: 5px;
+  opacity: 1;
+}
+
+.carousel-dot:hover {
+  background: #999999;
+  opacity: 0.8;
+}
+
 .product-detail-info {
   flex: 0 0 400px;
   width: 400px;
@@ -3947,6 +4062,34 @@ a {
     height: 280px !important;
     filter: none !important;
     transform: none !important;
+  }
+  
+  /* Carousel mobile styles */
+  .carousel-image-container {
+    min-height: 280px !important;
+  }
+  
+  .carousel-image {
+    width: 280px !important;
+    height: 280px !important;
+    max-width: 280px !important;
+    max-height: 280px !important;
+    filter: none !important;
+  }
+  
+  /* Hide arrows on mobile - use swipe instead */
+  .carousel-arrow {
+    display: none !important;
+  }
+  
+  /* Make carousel touch-friendly on mobile */
+  .carousel-image-container {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .carousel-dots {
+    margin-top: 15px !important;
   }
   
   /* Disable hover scale on mobile */
