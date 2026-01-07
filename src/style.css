@@ -59,10 +59,15 @@ body:not(.booted) html {
   background: #9C9CCE !important;
 }
 
+/* Remove purple background once booted */
 body.booted {
-  background: #2a2a2a;
+  background: #FDFDFD !important;
   color: #000000;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body.booted html {
+  background: #FDFDFD !important;
 }
 
 /* Mobile: booted body should allow scrolling */
@@ -414,6 +419,9 @@ body.booted {
   height: 50px;
   margin: 0 15px 0;
   z-index: 1000;
+  /* Ensure sticky positioning works */
+  align-self: flex-start;
+  /* Desktop will override with !important in media query */
   /* Linear gradient: #EFEFEF at 65%, #FFFFFF at 100% */
   background: linear-gradient(
     180deg,
@@ -622,14 +630,27 @@ body.booted {
   flex-direction: column;
 }
 
-/* Shipping Policy - move headers up */
-.shop-content.legal-page.legal-page-shipping {
-  padding-top: 110px !important;
-}
-
-/* Return Policy - move headers up */
-.shop-content.legal-page.legal-page-return {
-  padding-top: 110px !important;
+/* DESKTOP ONLY - Individual legal page heights */
+@media screen and (min-width: 769px) {
+  /* Terms of Service page - edit padding-top to adjust height */
+  .shop-content.legal-page.legal-page-terms {
+    padding-top: 110px !important;
+  }
+  
+  /* Privacy Policy page - edit padding-top to adjust height */
+  .shop-content.legal-page.legal-page-privacy {
+    padding-top: 110px !important;
+  }
+  
+  /* Shipping Policy page - edit padding-top to adjust height */
+  .shop-content.legal-page.legal-page-shipping {
+    padding-top: 110px !important;
+  }
+  
+  /* Return Policy page - edit padding-top to adjust height */
+  .shop-content.legal-page.legal-page-return {
+    padding-top: 110px !important;
+  }
 }
 
 /* Legal page footer spacing - match homepage whitespace */
@@ -733,7 +754,7 @@ body.booted {
     top: auto !important;
     left: auto !important;
     transform: none !important;
-    margin-top: 0 !important;
+    margin-top: 40px !important;
     margin-bottom: 30px !important;
   }
 }
@@ -830,21 +851,22 @@ body.mobile-view .shop-container.home-page-container {
   width: 100% !important;
 }
 
-/* Mobile nav bar - applies to ALL pages (home, softwear, hardwear, basket) */
-body.mobile-view .shop-container > .top-nav-bar,
-body.mobile-view .shop-container.home-page-container > .top-nav-bar {
-  order: 1 !important;
-  position: fixed !important;
-  top: 0 !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: calc(100% - 20px) !important;
-  max-width: none !important;
-  height: 40px !important;
-  margin: 5px auto 20px auto !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  z-index: 10000 !important;
+/* Mobile nav bar - applies to ALL pages (home, softwear, hardwear, basket) - MOBILE ONLY */
+@media (max-width: 768px) {
+  body.mobile-view .shop-container > .top-nav-bar,
+  body.mobile-view .shop-container.home-page-container > .top-nav-bar {
+    order: 1 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+    height: 40px !important;
+    margin: 5px auto 20px auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    z-index: 10000 !important;
   /* Linear gradient: #EFEFEF at 65%, #FFFFFF at 100% */
   background: linear-gradient(
     180deg,
@@ -866,6 +888,7 @@ body.mobile-view .shop-container.home-page-container > .top-nav-bar {
   align-items: center !important;
   justify-content: space-between !important;
   padding: 0 !important;
+  }
 }
 
 /* Mobile nav buttons - make them equal width - applies to ALL pages */
@@ -1177,12 +1200,15 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
   position: sticky;
   top: 15px;
   z-index: 1000;
+  /* Desktop sticky will override with !important in media query */
   width: calc(100vw - 30px);
   max-width: none;
   margin-left: calc(-50vw + 50% + 15px);
   margin-right: calc(-50vw + 50% + 15px);
   margin-top: 0 !important;
   margin-bottom: 20px;
+  /* Ensure sticky works - align-self for grid items */
+  align-self: start;
   /* Match base .top-nav-bar styling exactly */
   height: 50px !important;
   /* Linear gradient: #EFEFEF at 65%, #FFFFFF at 100% */
@@ -1912,7 +1938,107 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
 }
 
 /* Desktop only - match homepage footer spacing on softwear/hardwear pages */
+/* DESKTOP ONLY - Force sticky nav bar - override mobile fixed positioning */
+/* DESKTOP ONLY - Override mobile fixed with sticky - must be after all mobile rules */
 @media screen and (min-width: 769px) {
+  /* Explicitly override body.mobile-view rules with same specificity */
+  body.mobile-view .shop-container > .top-nav-bar,
+  body.mobile-view .shop-container.home-page-container > .top-nav-bar,
+  body .shop-container > .top-nav-bar,
+  body .shop-container.home-page-container > .top-nav-bar,
+  body .shop-container:has(.softwear-content) > .top-nav-bar,
+  body .shop-container:has(.hardwear-content) > .top-nav-bar,
+  body .shop-container:has(.basket-scrollbar-container) > .top-nav-bar,
+  .top-nav-bar {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 15px !important;
+    z-index: 1000 !important;
+    align-self: flex-start !important;
+    /* Override any fixed positioning from mobile rules */
+    left: auto !important;
+    transform: none !important;
+    width: calc(100% - 30px) !important;
+    height: 50px !important;
+    margin: 0 15px 0 !important;
+  }
+  
+  /* Ensure parent containers allow sticky to work - no overflow hidden */
+  /* Sticky requires scrolling to happen on html/body, not on parent containers */
+  html {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+  
+  .monitor-wrapper {
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    position: relative !important;
+    /* Ensure monitor-wrapper doesn't create a scrolling context */
+    contain: none !important;
+  }
+  
+  #app {
+    overflow: visible !important;
+    height: auto !important;
+    position: relative !important;
+    /* Ensure #app doesn't create a scrolling context */
+    contain: none !important;
+  }
+  
+  /* Ensure shop-container allows scrolling for sticky to work */
+  /* Sticky needs the container to be taller than viewport for it to stick */
+  .shop-container:has(.softwear-content),
+  .shop-container:has(.hardwear-content),
+  .shop-container:has(.basket-scrollbar-container) {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    /* Ensure container can grow beyond viewport for sticky to work */
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  /* Homepage grid container - allow scrolling, keep grid layout */
+  .shop-container.home-page-container {
+    overflow: visible !important;
+    position: relative !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    /* Keep grid layout for homepage */
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    /* Ensure grid container can grow for scrolling */
+    align-content: start !important;
+    /* Add padding-top to account for fixed nav bar */
+    padding-top: 85px !important;
+  }
+  
+  /* Homepage nav bar - use fixed positioning instead of sticky for desktop */
+  /* Fixed positioning works better with complex margins that break out of grid */
+  .shop-container.home-page-container > .top-nav-bar {
+    position: fixed !important;
+    top: 15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    grid-column: 1 / -1 !important;
+    /* Preserve full-width breakout for homepage */
+    width: calc(100vw - 30px) !important;
+    max-width: 1200px !important;
+    z-index: 1000 !important;
+    /* Remove complex margins since we're using fixed positioning */
+    margin: 0 !important;
+  }
+  
   /* Center content vertically while footer stays at bottom */
   .shop-content:has(.softwear-content),
   .shop-content:has(.hardwear-content) {
@@ -1930,16 +2056,16 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     margin-top: auto !important;
   }
   
-  /* Ensure container doesn't add extra padding or spacing and prevent scroll */
+  /* Ensure container doesn't add extra padding or spacing - allow scrolling for sticky nav */
   .shop-container:has(.softwear-content),
   .shop-container:has(.hardwear-content) {
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
     min-height: 100vh !important;
-    max-height: 100vh !important;
+    max-height: none !important;
     display: flex !important;
     flex-direction: column !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
   
   /* Remove bottom padding/margin from content wrappers to match homepage */
@@ -1964,18 +2090,18 @@ body.mobile-view .shop-container.home-page-container > .product-showcase-item {
     flex: 0 0 auto !important;
   }
   
-  /* Ensure hardwear-content doesn't force page to scroll - constrain to fit viewport */
+  /* Allow content to be tall enough for sticky to work - remove height constraints */
   .hardwear-content {
     min-height: 0 !important;
-    max-height: calc(100vh - 250px) !important;
-    overflow-y: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
   }
   
-  /* Ensure softwear-content also doesn't force scroll */
+  /* Allow content to be tall enough for sticky to work */
   .softwear-content {
     min-height: 0 !important;
-    max-height: calc(100vh - 250px) !important;
-    overflow-y: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
   }
   
   /* Basket page - center content vertically and match homepage footer spacing */
@@ -4678,5 +4804,53 @@ a {
 }
 
 /* Removed duplicate mobile styles - using the ones defined earlier instead */
+
+/* FINAL DESKTOP OVERRIDE - Must be at the end to override all mobile rules */
+/* This rule MUST come after all other rules and have maximum specificity */
+@media screen and (min-width: 769px) {
+  /* Force sticky on desktop - override ALL mobile fixed rules with maximum specificity */
+  /* General nav bars (softwear, hardwear, basket) */
+  html body.mobile-view .shop-container > .top-nav-bar,
+  html body .shop-container > .top-nav-bar,
+  html body .shop-container:has(.softwear-content) > .top-nav-bar,
+  html body .shop-container:has(.hardwear-content) > .top-nav-bar,
+  html body .shop-container:has(.basket-scrollbar-container) > .top-nav-bar,
+  body .shop-container > .top-nav-bar,
+  .shop-container > .top-nav-bar,
+  .top-nav-bar {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 15px !important;
+    left: auto !important;
+    transform: none !important;
+    width: calc(100% - 30px) !important;
+    height: 50px !important;
+    margin: 0 15px 0 !important;
+    z-index: 1000 !important;
+    /* Remove align-self that might interfere with sticky */
+    align-self: auto !important;
+  }
+  
+  /* Homepage nav bar - use fixed positioning instead of sticky for desktop */
+  /* Fixed positioning works better with complex margins that break out of grid */
+  html body.mobile-view .shop-container.home-page-container > .top-nav-bar,
+  html body .shop-container.home-page-container > .top-nav-bar,
+  body .shop-container.home-page-container > .top-nav-bar,
+  .shop-container.home-page-container > .top-nav-bar {
+    position: fixed !important;
+    top: 15px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    /* Match softwear/hardwear page width - use viewport width without max-width constraint */
+    width: calc(100vw - 30px) !important;
+    max-width: none !important;
+    height: 50px !important;
+    /* Remove complex margins since we're using fixed positioning */
+    margin: 0 !important;
+    z-index: 1000 !important;
+    /* Ensure it spans all grid columns */
+    grid-column: 1 / -1 !important;
+  }
+}
 
 
