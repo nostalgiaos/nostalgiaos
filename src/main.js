@@ -444,27 +444,21 @@ function showMainContent() {
   // Add mobile class to body for CSS targeting
   if (isMobileView) {
     document.body.classList.add('mobile-view')
-    // IMMEDIATELY lock scroll BEFORE any rendering
+    // Just scroll to top, don't block scrolling
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     window.scrollTo(0, 0)
     if (document.documentElement) {
       document.documentElement.scrollTop = 0
-      document.documentElement.style.scrollTop = '0'
-      document.documentElement.style.overflow = 'hidden'
-      document.documentElement.style.position = 'fixed'
-      document.documentElement.style.width = '100%'
-      document.documentElement.style.top = '0'
     }
     if (document.body) {
       document.body.scrollTop = 0
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-      document.body.style.top = '0'
     }
     if (document.scrollingElement) {
       document.scrollingElement.scrollTop = 0
     }
+    // Ensure scrolling is enabled immediately
+    document.documentElement.style.overflow = 'auto'
+    document.body.style.overflow = 'auto'
   } else {
     document.body.classList.remove('mobile-view')
   }
@@ -487,7 +481,7 @@ function showMainContent() {
         <!-- Softwear Products -->
         <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" />
+            <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" decoding="async" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">the essentials</h3>
@@ -497,7 +491,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">jeans</h3>
@@ -507,7 +501,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -518,7 +512,7 @@ function showMainContent() {
         <!-- Hardwear Products -->
         <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" />
+            <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" decoding="async" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">marlboros</h3>
@@ -528,7 +522,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" />
+            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" decoding="async" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">nostalgia flag</h3>
@@ -569,54 +563,20 @@ function showMainContent() {
     </div>
   `
   
-  // MOBILE: Wait for CSS to load on Vercel, then proceed with scroll locking
+  // MOBILE: Just ensure scroll is at top, scrolling is already enabled
   if (isMobileView) {
     waitForCSS(() => {
-      proceedWithScrollLock()
+      // Just ensure we're at top, scrolling is already enabled
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+        window.scrollTo(0, 0)
+      })
     })
-  } else {
-    proceedWithScrollLock()
   }
   
   function proceedWithScrollLock() {
-    // MOBILE: Ensure scroll is at top before unlocking overflow
-    if (isMobileView) {
-    // Wait for content to render, then ensure scroll is at top
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        // Force scroll to top multiple times while overflow is still hidden
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-        window.scrollTo(0, 0)
-        if (document.documentElement) {
-          document.documentElement.scrollTop = 0
-          document.documentElement.scrollTo(0, 0)
-        }
-        if (document.body) {
-          document.body.scrollTop = 0
-          document.body.scrollTo(0, 0)
-        }
-        if (document.scrollingElement) {
-          document.scrollingElement.scrollTop = 0
-          document.scrollingElement.scrollTo(0, 0)
-        }
-        
-        // Wait a bit more, then unlock overflow
-        setTimeout(() => {
-          // Final scroll check before unlocking - ensure we're at 0
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-          window.scrollTo(0, 0)
-          if (document.documentElement) {
-            document.documentElement.scrollTop = 0
-          }
-          if (document.body) {
-            document.body.scrollTop = 0
-          }
-          
-          // Now unlock overflow and enable scrolling
-          document.documentElement.style.position = 'static'
-          document.documentElement.style.width = 'auto'
-          document.documentElement.style.top = 'auto'
-          document.documentElement.style.overflow = 'auto'
+    // Desktop scroll handling (if needed)
+    if (!isMobileView) {
           document.body.style.position = 'relative'
           document.body.style.width = 'auto'
           document.body.style.top = 'auto'
@@ -660,7 +620,7 @@ function showMainContent() {
           }, 50) // Check every 50ms
         }, 200)
       })
-    })
+    }
   } else {
     // Desktop: smooth scrolling
     if (document.body) {
@@ -672,6 +632,11 @@ function showMainContent() {
       document.documentElement.style.overflow = 'auto'
       document.documentElement.style.scrollBehavior = 'smooth'
     }
+  }
+  
+  // Call proceedWithScrollLock for desktop
+  if (!isMobileView) {
+    proceedWithScrollLock()
   }
   
   // AGGRESSIVE scroll to top for mobile - run multiple times to ensure it sticks
@@ -870,7 +835,7 @@ function showSoftwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" />
+                      <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" decoding="async" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">the essentials</h3>
@@ -879,7 +844,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">jeans</h3>
@@ -888,7 +853,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -1169,8 +1134,8 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
-                    <img src="/stevemachoodie_front.png" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
-                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" />
+                    <img src="/stevemachoodie_front.png" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
+                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
@@ -1182,8 +1147,8 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
-                    <img src="/jeans1.svg" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
-                    <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" />
+                    <img src="/jeans1.svg" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
+                    <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
@@ -1193,7 +1158,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 </div>
                 ` : `
                 <div class="product-detail-image" data-product-image="${productImage}">
-                  <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" ${productAttrs} />
+                  <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" decoding="async" ${productAttrs} />
                 </div>
                 `}
                 
@@ -1885,7 +1850,7 @@ function showHardwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" />
+                      <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" decoding="async" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">marlboros</h3>
@@ -1894,7 +1859,7 @@ function showHardwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" />
+                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" decoding="async" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">nostalgia flag</h3>

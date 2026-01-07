@@ -63,14 +63,16 @@ body.booted {
   background: #2a2a2a;
   color: #000000;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+}
+
+/* Mobile: booted body should allow scrolling */
+@media (max-width: 768px) {
+  body.booted {
+    display: block;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
 }
 
 /* Mac OS Boot Screen */
