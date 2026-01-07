@@ -510,7 +510,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
+            <img src="${window.innerWidth <= 768 ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/500px%20stevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -808,7 +808,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
+                      <img src="${window.innerWidth <= 768 ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/500px%20stevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -1053,9 +1053,9 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   // Check if mobile
   const isMobile = window.innerWidth <= 768
   
-  // Use mobile images for hoodie on mobile
+  // Use mobile images for hoodie on mobile (500px for Retina quality)
   if (isMobile && productImage.includes('stevemachoodie_front.png')) {
-    productImage = '/smallstevemachoodie_front.png'
+    productImage = '/500pxstevemachoodie_front.png'
   }
   
   // Determine width/height based on product image - use display size for mobile to prevent rasterization
@@ -1069,12 +1069,12 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   }
   
   // Check if this is a product with front/back images and add hover attributes
-  const isHoodie = productImage.includes('stevemachoodie') || productImage.includes('smallstevemachoodie')
+  const isHoodie = productImage.includes('stevemachoodie') || productImage.includes('500px')
   const isJeans = productImage.includes('jeans1.svg')
   let productAttrs = ''
   if (isHoodie) {
-    const frontImg = isMobile ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'
-    const backImg = isMobile ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'
+    const frontImg = isMobile ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'
+    const backImg = isMobile ? '/500px%20stevemachoodie_back.png' : '/stevemachoodie_back.png'
     productAttrs = `data-product-image data-product-front="${frontImg}" data-product-back="${backImg}"`
   } else if (isJeans) {
     productAttrs = 'data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png"'
@@ -1099,8 +1099,8 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
-                    <img src="${isMobile ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
-                    <img src="${isMobile ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
+                    <img src="${isMobile ? '/500pxstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
+                    <img src="${isMobile ? '/500px%20stevemachoodie_back.png' : '/stevemachoodie_back.png'}" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
