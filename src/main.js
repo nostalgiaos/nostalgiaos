@@ -79,11 +79,20 @@ async function convertImgToInlineSVG(imgElement) {
       svgElement.style.transform = 'none'
       svgElement.style.webkitTransform = 'none'
       
-      // Replace img with inline SVG
-      imgElement.parentNode.replaceChild(svgElement, imgElement)
+      // Replace img with inline SVG - check if element is still in DOM
+      if (imgElement.parentNode && imgElement.isConnected) {
+        imgElement.parentNode.replaceChild(svgElement, imgElement)
+      } else {
+        // Element was removed from DOM, skip conversion
+        return
+      }
     }
   } catch (error) {
-    console.error('Failed to convert SVG to inline:', error)
+    // Silently fail - element might have been removed from DOM
+    // Only log if it's not a null reference error
+    if (!error.message || !error.message.includes('null')) {
+      console.error('Failed to convert SVG to inline:', error)
+    }
   }
 }
 
@@ -99,8 +108,8 @@ async function convertAllSVGImagesToInline() {
   
   // Convert each image
   const promises = Array.from(svgImages).map(async (img) => {
-    // Double-check it's still an img tag (not already converted)
-    if (img.tagName === 'IMG' && img.src && img.src.endsWith('.svg')) {
+    // Double-check it's still an img tag, still in DOM, and is an SVG
+    if (img.tagName === 'IMG' && img.isConnected && img.src && img.src.endsWith('.svg')) {
       await convertImgToInlineSVG(img)
     }
   })
@@ -501,7 +510,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+            <img src="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -799,7 +808,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+                      <img src="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="Hoodie" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="${window.innerWidth <= 768 ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" data-product-back="${window.innerWidth <= 768 ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -1041,6 +1050,14 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   const softwearActive = activeSection === 'softwear' ? 'active' : ''
   const hardwearActive = activeSection === 'hardwear' ? 'active' : ''
   
+  // Check if mobile
+  const isMobile = window.innerWidth <= 768
+  
+  // Use mobile images for hoodie on mobile
+  if (isMobile && productImage.includes('stevemachoodie_front.png')) {
+    productImage = '/smallstevemachoodie_front.png'
+  }
+  
   // Determine width/height based on product image - use display size for mobile to prevent rasterization
   // On mobile, we use 280px to match CSS. Desktop will scale appropriately.
   let imgWidth = '280'
@@ -1052,11 +1069,13 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   }
   
   // Check if this is a product with front/back images and add hover attributes
-  const isHoodie = productImage.includes('stevemachoodie_front.png')
+  const isHoodie = productImage.includes('stevemachoodie') || productImage.includes('smallstevemachoodie')
   const isJeans = productImage.includes('jeans1.svg')
   let productAttrs = ''
   if (isHoodie) {
-    productAttrs = 'data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png"'
+    const frontImg = isMobile ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'
+    const backImg = isMobile ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'
+    productAttrs = `data-product-image data-product-front="${frontImg}" data-product-back="${backImg}"`
   } else if (isJeans) {
     productAttrs = 'data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png"'
   }
@@ -1080,8 +1099,8 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
-                    <img src="/stevemachoodie_front.png" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
-                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
+                    <img src="${isMobile ? '/smallstevemachoodie_front.png' : '/stevemachoodie_front.png'}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
+                    <img src="${isMobile ? '/smallstevemachoodie_back.png' : '/stevemachoodie_back.png'}" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
