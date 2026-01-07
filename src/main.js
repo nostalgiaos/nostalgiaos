@@ -574,55 +574,8 @@ function showMainContent() {
     })
   }
   
-  function proceedWithScrollLock() {
-    // Desktop scroll handling (if needed)
-    if (!isMobileView) {
-          document.body.style.position = 'relative'
-          document.body.style.width = 'auto'
-          document.body.style.top = 'auto'
-          document.body.style.overflow = 'auto'
-          
-          // Immediately after unlocking, force scroll to top again
-          requestAnimationFrame(() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-            window.scrollTo(0, 0)
-            if (document.documentElement) {
-              document.documentElement.scrollTop = 0
-            }
-            if (document.body) {
-              document.body.scrollTop = 0
-            }
-          })
-          
-          // Monitor and correct scroll position for 1 second after unlocking
-          let scrollCheckCount = 0
-          const maxScrollChecks = 20 // Check 20 times over 1 second
-          const scrollMonitor = setInterval(() => {
-            scrollCheckCount++
-            if (scrollCheckCount >= maxScrollChecks) {
-              clearInterval(scrollMonitor)
-              return
-            }
-            
-            // Check if scroll has moved from top
-            const currentScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-            if (currentScroll > 0) {
-              // Force back to top
-              window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-              window.scrollTo(0, 0)
-              if (document.documentElement) {
-                document.documentElement.scrollTop = 0
-              }
-              if (document.body) {
-                document.body.scrollTop = 0
-              }
-            }
-          }, 50) // Check every 50ms
-        }, 200)
-      })
-    }
-  } else {
-    // Desktop: smooth scrolling
+  // Desktop: smooth scrolling
+  if (!isMobileView) {
     if (document.body) {
       document.body.style.overflow = 'auto'
       document.body.style.position = 'relative'
@@ -632,11 +585,6 @@ function showMainContent() {
       document.documentElement.style.overflow = 'auto'
       document.documentElement.style.scrollBehavior = 'smooth'
     }
-  }
-  
-  // Call proceedWithScrollLock for desktop
-  if (!isMobileView) {
-    proceedWithScrollLock()
   }
   
   // AGGRESSIVE scroll to top for mobile - run multiple times to ensure it sticks
@@ -679,8 +627,6 @@ function showMainContent() {
     // Run on page focus
     window.addEventListener('focus', scrollToTop)
   }
-  
-  } // Close proceedWithScrollLock function
   
   // Listen for resize to scroll to top when switching to mobile
   let lastWidth = window.innerWidth
