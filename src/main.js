@@ -268,10 +268,7 @@ function generateTrashSound() {
 
 // Show boot screen first
 async function showBootScreen() {
-  // Load SVG content inline so we can manipulate it
-  const response = await fetch('/loading screen.svg')
-  const svgContent = await response.text()
-  
+  // Show boot screen immediately (don't wait for SVG fetch)
   document.querySelector('#app').innerHTML = `
     <div class="monitor-wrapper">
       <div class="boot-screen">
@@ -279,6 +276,10 @@ async function showBootScreen() {
       </div>
     </div>
   `
+  
+  // Load SVG content inline so we can manipulate it (async, non-blocking)
+  const response = await fetch('/loading screen.svg')
+  const svgContent = await response.text()
   
   // Inject SVG into container
   const container = document.querySelector('.boot-screen-svg-container')
@@ -486,7 +487,7 @@ function showMainContent() {
         <!-- Softwear Products -->
         <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" />
+            <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">the essentials</h3>
@@ -496,7 +497,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+            <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">jeans</h3>
@@ -506,7 +507,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
           <div class="product-showcase-image">
-            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+            <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">hoodie</h3>
@@ -517,7 +518,7 @@ function showMainContent() {
         <!-- Hardwear Products -->
         <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" />
+            <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">marlboros</h3>
@@ -527,7 +528,7 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
           <div class="product-showcase-image">
-            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" />
+            <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" />
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">nostalgia flag</h3>
@@ -869,7 +870,7 @@ function showSoftwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" />
+                      <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">the essentials</h3>
@@ -878,7 +879,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+                      <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">jeans</h3>
@@ -887,7 +888,7 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-03" data-section="softwear">
                     <div class="product-showcase-image">
-                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
+                      <img src="/stevemachoodie_front.png" alt="Hoodie" width="250" height="250" loading="lazy" data-product-image data-product-front="/stevemachoodie_front.png" data-product-back="/stevemachoodie_back.png" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">hoodie</h3>
@@ -1169,7 +1170,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
                     <img src="/stevemachoodie_front.png" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
-                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" />
+                    <img src="/stevemachoodie_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
@@ -1182,7 +1183,7 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
                     <img src="/jeans1.svg" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" />
-                    <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" />
+                    <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" />
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
@@ -1884,7 +1885,7 @@ function showHardwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" />
+                      <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">marlboros</h3>
@@ -1893,7 +1894,7 @@ function showHardwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
                     <div class="product-showcase-image">
-                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" />
+                      <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" />
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">nostalgia flag</h3>
