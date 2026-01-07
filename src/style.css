@@ -4276,7 +4276,9 @@ a {
     height: 280px;
   }
   
-  /* Lock display size for hoodie images - 385px (half of 770px = true 2x) */
+  /* Lock display size for mobile product images - 385px (half of 770px = true 2x) */
+  .product-showcase-item[data-product="essentials-01"] .product-showcase-image,
+  .product-showcase-item[data-product="essentials-02"] .product-showcase-image,
   .product-showcase-item[data-product="essentials-03"] .product-showcase-image {
     width: 385px !important;
     height: 385px !important;
@@ -4296,7 +4298,9 @@ a {
     will-change: auto !important;
   }
   
-  /* Lock hoodie image size - no transforms, no filters */
+  /* Lock mobile product image sizes - no transforms, no filters */
+  .product-showcase-item[data-product="essentials-01"] .product-showcase-image img,
+  .product-showcase-item[data-product="essentials-02"] .product-showcase-image img,
   .product-showcase-item[data-product="essentials-03"] .product-showcase-image img {
     width: 385px !important;
     height: 385px !important;
@@ -4372,13 +4376,15 @@ a {
     justify-content: center !important;
   }
   
-  /* Lock hoodie detail image size on mobile - 385px */
-  .product-detail-image.product-image-carousel[data-product-image*="770px"] {
+  /* Lock mobile product detail image sizes - 385px */
+  .product-detail-image.product-image-carousel[data-product-image*="770px"],
+  .product-detail-image[data-product-image*="770px"] {
     width: 385px !important;
     height: 385px !important;
   }
   
-  .product-detail-image.product-image-carousel[data-product-image*="770px"] .carousel-image {
+  .product-detail-image.product-image-carousel[data-product-image*="770px"] .carousel-image,
+  .product-detail-image[data-product-image*="770px"] img {
     width: 385px !important;
     height: 385px !important;
     max-width: 385px !important;

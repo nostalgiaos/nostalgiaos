@@ -490,7 +490,19 @@ function showMainContent() {
         <!-- Softwear Products -->
         <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
           <div class="product-showcase-image">
+            ${window.innerWidth <= 768 ? `
+            <img 
+              src="/770pxshirt_front.png" 
+              srcset="/770pxshirt_front.png 1x, /770pxshirt_front.png 2x, /cigtshirt.svg 3x"
+              alt="The Essentials" 
+              width="385" 
+              height="385" 
+              fetchpriority="high" 
+              decoding="async" 
+            />
+            ` : `
             <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" decoding="async" />
+            `}
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">the essentials</h3>
@@ -500,7 +512,22 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
           <div class="product-showcase-image">
+            ${window.innerWidth <= 768 ? `
+            <img 
+              src="/770pxjeans_front.png" 
+              srcset="/770pxjeans_front.png 1x, /770pxjeans_front.png 2x, /jeans1.svg 3x"
+              alt="Jeans" 
+              width="385" 
+              height="385" 
+              loading="lazy" 
+              decoding="async" 
+              data-product-image 
+              data-product-front="/770pxjeans_front.png" 
+              data-product-back="/770pxjeans_back.png" 
+            />
+            ` : `
             <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+            `}
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">jeans</h3>
@@ -805,7 +832,19 @@ function showSoftwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable" data-product="essentials-01" data-section="softwear">
                     <div class="product-showcase-image">
+                      ${window.innerWidth <= 768 ? `
+                      <img 
+                        src="/770pxshirt_front.png" 
+                        srcset="/770pxshirt_front.png 1x, /770pxshirt_front.png 2x, /cigtshirt.svg 3x"
+                        alt="The Essentials" 
+                        width="385" 
+                        height="385" 
+                        fetchpriority="high" 
+                        decoding="async" 
+                      />
+                      ` : `
                       <img src="/cigtshirt.svg" alt="The Essentials" width="250" height="250" fetchpriority="high" decoding="async" />
+                      `}
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">the essentials</h3>
@@ -814,7 +853,22 @@ function showSoftwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="essentials-02" data-section="softwear">
                     <div class="product-showcase-image">
+                      ${window.innerWidth <= 768 ? `
+                      <img 
+                        src="/770pxjeans_front.png" 
+                        srcset="/770pxjeans_front.png 1x, /770pxjeans_front.png 2x, /jeans1.svg 3x"
+                        alt="Jeans" 
+                        width="385" 
+                        height="385" 
+                        loading="lazy" 
+                        decoding="async" 
+                        data-product-image 
+                        data-product-front="/770pxjeans_front.png" 
+                        data-product-back="/770pxjeans_back.png" 
+                      />
+                      ` : `
                       <img src="/jeans1.svg" alt="Jeans" width="250" height="250" loading="lazy" decoding="async" data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png" />
+                      `}
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">jeans</h3>
@@ -1083,9 +1137,13 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   // Check if mobile
   const isMobile = window.innerWidth <= 768
   
-  // Use mobile images for hoodie on mobile (770px PNG for 1x/2x, SVG for 3x)
+  // Use mobile images for products on mobile (770px PNG for 1x/2x, SVG for 3x)
   if (isMobile && productImage.includes('stevemachoodie_front.png')) {
     productImage = '/770pxsteveholdingmachoodie_front.png'
+  } else if (isMobile && productImage.includes('jeans1.svg')) {
+    productImage = '/770pxjeans_front.png'
+  } else if (isMobile && productImage.includes('cigtshirt.svg')) {
+    productImage = '/770pxshirt_front.png'
   }
   
   // Determine width/height based on product image - use display size for mobile to prevent rasterization
@@ -1099,15 +1157,17 @@ function showProductDetailPage(productId, productName, productImage, price, acti
   }
   
   // Check if this is a product with front/back images and add hover attributes
-  const isHoodie = productImage.includes('stevemachoodie') || productImage.includes('770px')
-  const isJeans = productImage.includes('jeans1.svg')
+  const isHoodie = productImage.includes('stevemachoodie') || productImage.includes('770pxsteve')
+  const isJeans = productImage.includes('jeans') || productImage.includes('770pxjeans')
   let productAttrs = ''
   if (isHoodie) {
     const frontImg = isMobile ? '/770pxsteveholdingmachoodie_front.png' : '/stevemachoodie_front.png'
     const backImg = isMobile ? '/770pxsteveholdingmachoodie_back.png' : '/stevemachoodie_back.png'
     productAttrs = `data-product-image data-product-front="${frontImg}" data-product-back="${backImg}"`
   } else if (isJeans) {
-    productAttrs = 'data-product-image data-product-front="/jeans1.svg" data-product-back="/jeans_back.png"'
+    const frontImg = isMobile ? '/770pxjeans_front.png' : '/jeans1.svg'
+    const backImg = isMobile ? '/770pxjeans_back.png' : '/jeans_back.png'
+    productAttrs = `data-product-image data-product-front="${frontImg}" data-product-back="${backImg}"`
   }
   
   document.querySelector('#app').innerHTML = `
@@ -1166,8 +1226,32 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 <div class="product-detail-image product-image-carousel" data-product-image="${productImage}">
                   <button class="carousel-arrow carousel-arrow-left" aria-label="Previous image"></button>
                   <div class="carousel-image-container">
+                    ${isMobile ? `
+                    <img 
+                      src="/770pxjeans_front.png" 
+                      srcset="/770pxjeans_front.png 1x, /770pxjeans_front.png 2x, /jeans1.svg 3x"
+                      alt="${productName}" 
+                      width="385" 
+                      height="385" 
+                      class="carousel-image active" 
+                      data-image-index="0" 
+                      decoding="async" 
+                    />
+                    <img 
+                      src="/770pxjeans_back.png" 
+                      srcset="/770pxjeans_back.png 1x, /770pxjeans_back.png 2x, /jeans_back.png 3x"
+                      alt="${productName} - Back" 
+                      width="385" 
+                      height="385" 
+                      class="carousel-image" 
+                      data-image-index="1" 
+                      loading="lazy" 
+                      decoding="async" 
+                    />
+                    ` : `
                     <img src="/jeans1.svg" alt="${productName}" width="${imgWidth}" height="${imgHeight}" class="carousel-image active" data-image-index="0" decoding="async" />
                     <img src="/jeans_back.png" alt="${productName} - Back" width="${imgWidth}" height="${imgHeight}" class="carousel-image" data-image-index="1" loading="lazy" decoding="async" />
+                    `}
                   </div>
                   <button class="carousel-arrow carousel-arrow-right" aria-label="Next image"></button>
                   <div class="carousel-dots">
@@ -1177,7 +1261,19 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                 </div>
                 ` : `
                 <div class="product-detail-image" data-product-image="${productImage}">
+                  ${isMobile && productImage.includes('770pxshirt') ? `
+                  <img 
+                    src="/770pxshirt_front.png" 
+                    srcset="/770pxshirt_front.png 1x, /770pxshirt_front.png 2x, /cigtshirt.svg 3x"
+                    alt="${productName}" 
+                    width="385" 
+                    height="385" 
+                    decoding="async" 
+                    ${productAttrs} 
+                  />
+                  ` : `
                   <img src="${productImage}" alt="${productName}" width="${imgWidth}" height="${imgHeight}" decoding="async" ${productAttrs} />
+                  `}
                 </div>
                 `}
                 
