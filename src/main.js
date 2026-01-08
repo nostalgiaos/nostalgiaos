@@ -81,7 +81,7 @@ async function convertImgToInlineSVG(imgElement) {
       
       // Replace img with inline SVG - check if element is still in DOM
       if (imgElement.parentNode && imgElement.isConnected) {
-        imgElement.parentNode.replaceChild(svgElement, imgElement)
+      imgElement.parentNode.replaceChild(svgElement, imgElement)
       } else {
         // Element was removed from DOM, skip conversion
         return
@@ -91,7 +91,7 @@ async function convertImgToInlineSVG(imgElement) {
     // Silently fail - element might have been removed from DOM
     // Only log if it's not a null reference error
     if (!error.message || !error.message.includes('null')) {
-      console.error('Failed to convert SVG to inline:', error)
+    console.error('Failed to convert SVG to inline:', error)
     }
   }
 }
@@ -563,7 +563,19 @@ function showMainContent() {
         <!-- Hardwear Products -->
         <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
           <div class="product-showcase-image">
+            ${window.innerWidth <= 768 ? `
+            <img 
+              src="/500pxmarlboros.png" 
+              srcset="/500pxmarlboros.png 1x, /500pxmarlboros.png 2x, /MarlborOS.svg 3x"
+              alt="MarlborOS" 
+              width="180" 
+              height="180" 
+              loading="lazy" 
+              decoding="async" 
+            />
+            ` : `
             <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" decoding="async" />
+            `}
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">marlboros</h3>
@@ -573,7 +585,19 @@ function showMainContent() {
         
         <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
           <div class="product-showcase-image">
+            ${window.innerWidth <= 768 ? `
+            <img 
+              src="/500pxfinderflag.png" 
+              srcset="/500pxfinderflag.png 1x, /500pxfinderflag.png 2x, /FinderUSAflag.svg 3x"
+              alt="Nostalgia Flag" 
+              width="250" 
+              height="250" 
+              loading="lazy" 
+              decoding="async" 
+            />
+            ` : `
             <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" decoding="async" />
+            `}
           </div>
           <div class="product-showcase-info">
             <h3 class="product-showcase-name">nostalgia flag</h3>
@@ -618,14 +642,14 @@ function showMainContent() {
   if (isMobileView) {
     waitForCSS(() => {
       // Just ensure we're at top, scrolling is already enabled
-      requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
         window.scrollTo(0, 0)
       })
     })
-  }
+        }
   
-  // Desktop: smooth scrolling
+    // Desktop: smooth scrolling
   if (!isMobileView) {
     if (document.body) {
       document.body.style.overflow = 'auto'
@@ -1268,6 +1292,26 @@ function showProductDetailPage(productId, productName, productImage, price, acti
                     alt="${productName}" 
                     width="320" 
                     height="320" 
+                    decoding="async" 
+                    ${productAttrs} 
+                  />
+                  ` : isMobile && productImage.includes('MarlborOS.svg') ? `
+                  <img 
+                    src="/500pxmarlboros.png" 
+                    srcset="/500pxmarlboros.png 1x, /500pxmarlboros.png 2x, /MarlborOS.svg 3x"
+                    alt="${productName}" 
+                    width="${imgWidth}" 
+                    height="${imgHeight}" 
+                    decoding="async" 
+                    ${productAttrs} 
+                  />
+                  ` : isMobile && productImage.includes('FinderUSAflag.svg') ? `
+                  <img 
+                    src="/500pxfinderflag.png" 
+                    srcset="/500pxfinderflag.png 1x, /500pxfinderflag.png 2x, /FinderUSAflag.svg 3x"
+                    alt="${productName}" 
+                    width="${imgWidth}" 
+                    height="${imgHeight}" 
                     decoding="async" 
                     ${productAttrs} 
                   />
@@ -1965,7 +2009,19 @@ function showHardwearPage() {
                 <div class="products-grid">
                   <div class="product-showcase-item product-clickable marlboros-item" data-product="marlboros-01" data-section="hardwear">
                     <div class="product-showcase-image">
+                      ${window.innerWidth <= 768 ? `
+                      <img 
+                        src="/500pxmarlboros.png" 
+                        srcset="/500pxmarlboros.png 1x, /500pxmarlboros.png 2x, /MarlborOS.svg 3x"
+                        alt="MarlborOS" 
+                        width="180" 
+                        height="180" 
+                        loading="lazy" 
+                        decoding="async" 
+                      />
+                      ` : `
                       <img src="/MarlborOS.svg" alt="MarlborOS" width="180" height="180" loading="lazy" decoding="async" />
+                      `}
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">marlboros</h3>
@@ -1974,7 +2030,19 @@ function showHardwearPage() {
                   </div>
                   <div class="product-showcase-item product-clickable" data-product="nostalgia-flag-01" data-section="hardwear">
                     <div class="product-showcase-image">
+                      ${window.innerWidth <= 768 ? `
+                      <img 
+                        src="/500pxfinderflag.png" 
+                        srcset="/500pxfinderflag.png 1x, /500pxfinderflag.png 2x, /FinderUSAflag.svg 3x"
+                        alt="Nostalgia Flag" 
+                        width="250" 
+                        height="250" 
+                        loading="lazy" 
+                        decoding="async" 
+                      />
+                      ` : `
                       <img src="/FinderUSAflag.svg" alt="Nostalgia Flag" width="250" height="250" loading="lazy" decoding="async" />
+                      `}
                     </div>
                     <div class="product-showcase-info">
                       <h3 class="product-showcase-name">nostalgia flag</h3>
